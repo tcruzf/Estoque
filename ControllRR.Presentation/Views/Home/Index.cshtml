@@ -1,0 +1,90 @@
+﻿@model DashboardViewModel
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Manutenções</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  @await Html.PartialAsync("Partials/_CustomStyle", Model)
+  </head>
+
+  <body>
+
+  @await Html.PartialAsync("Partials/_Cards", Model)
+
+<script type="text/javascript" href="~/js/graficos.js"></script>
+  <!-- Scripts para Gráficos (Chart.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    let memoryChart, maintenanceChart;
+
+    function initCharts(initialData, maintenanceData) {
+        // Gráfico de Memória
+        memoryChart = new Chart(document.getElementById('memoryChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Usada', 'Livre'],
+                datasets: [{
+                    data: [initialData.memory, 100 - initialData.memory],
+                    backgroundColor: ['#ff6384', '#36a2eb']
+                }]
+            }
+        });
+
+        // Gráfico de Manutenções
+        maintenanceChart = new Chart(document.getElementById('maintenanceChart'), {
+            type: 'bar',
+            data: {
+                labels: Object.keys(maintenanceData),
+                datasets: [{
+                    label: 'Manutenções',
+                    data: Object.values(maintenanceData),
+                    backgroundColor: '#007bff'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Atualização periódica
+    setInterval(async () => {
+        try {
+            const response = await fetch('/server/status/resources');
+            const data = await response.json();
+            
+            // Atualiza os cards
+            document.getElementById('cpuUsage').textContent = `${data.cpu}%`;
+            document.getElementById('memoryUsage').textContent = `${data.memory}%`;
+            
+            // Atualiza os gráficos
+            memoryChart.data.datasets[0].data = [data.memory, 100 - data.memory];
+            memoryChart.update();
+            
+        } catch (error) {
+            console.error('Erro na atualização:', error);
+        }
+    }, 5000);
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+        initCharts(
+            { memory: @Model.MemoryUsage },
+            @Json.Serialize(Model.MaintenancesByMonth)
+        );
+    });
+    
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+@model ControllRR.Application.Dto.SectorDto;
+ @{
+    ViewData["Title"] = "Registrar novo Setor";
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4"></h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/Devices">Setores</a></li>
+          <li class="breadcrumb-item active">Adicionar</li>
+    </ol>
+</div>
+
+<div class="row">
+<div class="col-md-12">
+<br>
+<div class="container">
+<div class="row">
+<div class="col-12">
+<div class="card">
+<div class="card-header text-center bg-dark text-white">
+<div class="row align-items-center">
+<div class="col-md-12">
+<h5>::Novo Setor::</h5>
+</div>
+</div>
+</div>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+<div class="card mt-12">
+<div class="card-header">Data::
+</div>
+<div class="card-body">
+<div class="row">
+  @await Html.PartialAsync("Partials/_NewSectorForm", Model)
+</div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+       <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+</script>
+
+   
+}

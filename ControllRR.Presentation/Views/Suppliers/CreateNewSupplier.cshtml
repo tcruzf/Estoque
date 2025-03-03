@@ -1,0 +1,322 @@
+@*/Views/Suppliers/CreateNewSupplier.cshtml*@ 
+@using ControllRR.Application.Dto
+@model SupplierDto
+
+@{
+    ViewData["Title"] = Model?.Id == 0 ? "Novo Fornecedor" : "Editar Fornecedor";
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationSummary()
+    </div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+<div class="container-fluid px-4">
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/Suppliers">Fornecedores</a></li>
+        <li class="breadcrumb-item active">@(Model?.Id == 0 ? "Novo" : "Editar")</li>
+    </ol>
+</div>
+
+<div class="card">
+   <!-- Card Header (Tabs) -->
+<div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+            <a class="nav-link @(Model?.Id == 0 ? "active" : "")" href="#supplier-info">Informações</a>
+        </li>
+        @if (Model?.Id != 0)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="#supplier-products">Produtos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#purchase-orders">Ordens de Compra/Notas Fiscais</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#add-product">Adicionar Produto</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#purchase-items">Itens</a>
+            </li>
+        }
+    </ul>
+</div>
+
+<!-- Card Body (Conteúdo das Abas) -->
+<div class="card-body">
+    <div class="tab-content">
+        <!-- Aba Informações -->
+        <div class="tab-pane @(Model?.Id == 0 ? "active" : "")" id="supplier-info">
+            @await Html.PartialAsync("Partials/_NewSupplierForm", Model)
+        </div>
+        @if(Model?.Id != 0)
+        {
+        <div class="tab-pane fade" id="purchase-orders">
+                    @await Component.InvokeAsync("SupplierPurchaseOrders", new { supplierId = Model.Id })
+                    @await Html.PartialAsync("Partials/_CreatePurchaseOrderForm", new PurchaseOrderDto { SupplierId = Model.Id })
+                </div>
+        }
+         @if(Model?.Id != 0)
+        {
+        <div class="tab-pane fade" id="purchase-items">
+                    @await Component.InvokeAsync("SupplierPurchaseOrders", new { supplierId = Model.Id })
+                    @await Html.PartialAsync("Partials/_AddPurchaseItensForm", new PurchaseOrderDto { SupplierId = Model.Id })
+                </div>
+        }
+        @if (Model?.Id != 0)
+        {
+            <!-- Aba Produtos -->
+            <div class="tab-pane" id="supplier-products">
+                @await Component.InvokeAsync("SupplierProducts", new { supplierId = Model.Id })
+            </div>
+
+            <!-- Aba Adicionar Produto -->
+            <div class="tab-pane" id="add-product">
+                @await Html.PartialAsync("Partials/_AddProductForm", new StockDto { SupplierId = Model.Id })
+            </div>
+              
+            
+        }
+       
+    </div>
+</div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+    
+
+    <script>
+        $(document).ready(function() {
+            // Máscara CNPJ
+            $('.cnpj-mask').mask('00.000.000/0000-00');
+            });
+            $(document).ready(function () {
+            $('.nav-tabs a').on('click', function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+
+            // Ativa a primeira aba ao carregar a página (caso novo fornecedor)
+            @if (Model?.Id == 0)
+            {
+                <text>$('a[href="#supplier-info"]').tab('show');</text>
+            }
+        });
+
+            // SweetAlert
+            @if (Model?.Id != 0)
+            {
+                <text>
+                Swal.fire({
+                    icon: 'success',
+                    title: '@TempData["SuccessMessage"]',
+                    text: 'Deseja adicionar um produto agora?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('a[href="#add-product"]').tab('show');
+                    }
+                    else
+                    {
+                    $('a[href="#supplier-info"]').tab('show');
+                    }
+                });
+                </text>
+            }
+            @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+            Swal.fire({
+                icon: 'success',
+                title: '@TempData["SuccessMessage"]',
+                showConfirmButton: true
+            });
+            </text>
+        }
+        @if (TempData["ProductSuccessMessage"] != null)
+        {
+            <text>
+            Swal.fire({
+                icon: 'success',
+                title: '@TempData["ProductSuccessMessage"]',
+                text: 'Deseja adicionar outro produto?',
+                showCancelButton: true,
+                confirmButtonText: 'Sim',
+                cancelButtonText: 'Não'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('a[href="#add-product"]').tab('show');
+                }
+                else
+                {
+                    $('a[href="#supplier-info"]').tab('show');
+                }
+            });
+            </text>
+        }
+        
+    </script>
+   
+         <script>
+      $(document).ready(function() {
+    // Configuração do autocomplete para fornecedores
+   $("#supplierSearch").autocomplete({
+    source: function(request, response) {
+        $.ajax({
+            url: '/Suppliers/Search',
+            data: { term: request.term },
+            success: function(data) {
+                response($.map(data, function(item) {
+                    return {
+                        label: item.name + " - " + item.cnpj, // PascalCase -- Se deixar PascalCase, exibe undefinied
+                        value: item.name, // PascalCase
+                        id: item.id,
+                        cnpj: item.cnpj,
+                        email: item.contactEmail,
+                        phone: item.phoneNumber,
+                        address: item.address
+                    };
+                }));
+            }
+        });
+    },
+    select: function(event, ui) {
+    console.log(ui.item); // Teste para ver a estrutura do objeto no console
+
+    if (ui.item && ui.item.id) {
+        window.location.href = '/Suppliers/CreateNewSupplier/' + ui.item.id;
+    } else {
+        console.error("ID do fornecedor não encontrado:", ui.item);
+    }
+}
+});
+
+    // Validação de CNPJ em tempo real
+    $("#supplierCNPJ").on('blur', function() {
+    const cnpj = $(this).val();
+    
+    $.get('/Suppliers/ValidateCnpj', { cnpj: cnpj }, function(response) {
+        if (!response.valid) {
+            Swal.fire('Atenção!', response.message, 'warning');
+            $(this).addClass('is-invalid');
+        } else {
+            $(this).removeClass('is-invalid');
+        }
+    });
+});
+
+    function updateSupplierFields(item) {
+        $("#supplierId").val(item.id);
+        $("#supplierSearch").val(item.name); 
+        $("#supplierCnpj").val(item.cnpj);
+        $("#supplierEmail").val(item.email);
+        $("#supplierPhone").val(item.phone);
+        $("#supplierAddress").val(item.address);
+    }
+
+    function loadSupplierProducts(supplierId) {
+        $.get('/Suppliers/GetSupplierProducts?supplierId=' + supplierId, function(data) {
+            $("#productsContainer").html(data);
+        });
+    }
+});
+</script>
+<script>
+$(document).ready(function() {
+    $('.nav-tabs a').on('click', function(e) {
+        e.preventDefault();
+        const target = $(this).attr('href');
+        
+        if (target === '#purchase-orders') {
+            // Carrega APENAS a lista de ordens
+            $.get(`/Suppliers/GetPurchaseOrders?supplierId=@Model.Id`, function(data) {
+                $("#purchase-orders-list").html(data); // Insere a lista aqui
+            });
+        }
+
+        // Ativa a aba
+        $(target).addClass('active show').siblings().removeClass('active show');
+        $(this).addClass('active').parent().siblings().find('a').removeClass('active');
+    });
+});
+// Adaptei esse trecho de um sistema que havia feito em 2019 para controle de provedores.
+// Funciona, mas pode ser melhorado.
+   function myCalc() {
+    // Obter valores como números float (tratando campos vazios)
+    const PurchasePrice = parseFloat(document.getElementById('StockDto.PurchasePrice').value) || 0;
+    const TaxRate = (parseFloat(document.getElementById('StockDto.TaxRate').value) || 0) / 100; // Convertendo porcentagem para decimal
+    const Profit = parseFloat(document.getElementById('StockDto.Profit').value) || 0;
+    console.log(PurchasePrice)
+    console.log(TaxRate)
+    // Calcular preço sugerido
+    const PriceSugested = (PurchasePrice * (1 + TaxRate)) + Profit;
+    
+    // Atualizar campo (com formatação monetária)
+    document.getElementById('StockDto.PriceSugested').value = PriceSugested.toFixed(2);
+}
+//
+document.getElementById("StockDto.TaxRate").addEventListener("change", myCalc, true);
+document.getElementById("StockDto.Profit").addEventListener("change", myCalc, true);
+document.getElementById("StockDto.PurchasePrice").addEventListener("change", myCalc, true);
+
+</script>  
+
+<script>
+
+
+   $(document).ready(function() {
+    $("#invoiceNumberSearch").autocomplete({ // ID do campo visível
+        source: function(requisicao, resposta) {
+            $.ajax({
+                url: '@Url.Action("SearchOrder", "PurchaseOrders")',
+                type: 'GET',
+                data: { filtro: requisicao.term },
+                success: function(dadosRetorno) {
+                    resposta($.map(dadosRetorno, function(item) {
+                        return {
+                            label: item.invoiceNumber + " - " + (item.issuerCNPJ || 'Sem CNPJ'),
+                            value: item.invoiceNumber,
+                            dados: item
+                        };
+                    }));
+                },
+                error: function(xhr, status, erro) {
+                    console.error("Erro na busca:", status, erro);
+                }
+            });
+        },
+        minLength: 3,
+        select: function(event, ui) {
+            // Atualiza o campo HIDDEN com o valor selecionado
+            $("#invoiceNumberHidden").val(ui.item.dados.invoiceNumber); 
+            // Atualiza o campo visível (opcional)
+            $("#invoiceNumberSearch").val(ui.item.dados.invoiceNumber); 
+            $("#purchaseOrderId").val(ui.item.dados.purchaseOrderId)
+            return false;
+        }
+    });
+});
+</script>
+}

@@ -1,0 +1,150 @@
+@model ControllRR.Presentation.ViewModels.MaintenanceViewModel;
+ @using ControllRR.Domain.Enums
+@{
+    ViewData["Title"] = "Criar nova Manutenção";
+}
+<div class="container-fluid px-4">
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+        <li class="breadcrumb-item active">Manutenções</li>
+        <li class="breadcrumb-item active">Criar</li>
+    </ol>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-edit me-1"></i>
+            Nova Manutenção
+        </div>
+        <div class="card-body">
+            @await Html.PartialAsync("Partials/_NewMaintenanceForm", Model)
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+   
+   <script type="text/javascript">
+$(document).ready(function () {
+$("#Seller_DepartmentId").change(function () {
+var f = $("form");
+f.submit(function () {
+var productData = f.serialize();
+$.post(f.attr("action"), Seller_Department, function (result, status) {
+if (result !== null) {
+$("#Seller_Department").text(result.Seller_Department);
+}
+else {
+alert('Invalid ID');
+}
+});
+});
+});
+});
+
+</script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+    <script>
+        $(document).ready(function () {
+            $("#deviceSearch").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Devices/Search',
+                        type: 'GET',
+                        data: { term: request.term },
+                        success: function (data) {
+                            response(data.map(device => ({
+                                label: `${device.model} (${device.serialNumber}) - ${device.identifier}`,
+                                value: device.id
+                            })));
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    $("#deviceSearch").val(ui.item.label);
+                    $("#deviceId").val(ui.item.value);
+                    return false;
+                }
+            });
+        });
+       document.getElementById("productSearch").addEventListener("input", function () {
+        let query = this.value;
+        if (query.length < 2) return;
+        
+        fetch(`/Stocks/Search?term=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                let suggestions = document.getElementById("productSuggestions");
+                suggestions.innerHTML = "";
+                data.forEach(produto => {
+                    // Utilize as propriedades retornadas pela API: productName, etc.
+                    let item = document.createElement("div");
+                    item.classList.add("list-group-item", "list-group-item-action");
+                    item.textContent = `${produto.productName} - Qtd: ${produto.productQuantity}`;
+                    item.addEventListener("click", function () {
+                        adicionarProduto(produto);
+                    });
+                    suggestions.appendChild(item);
+                });
+            })
+            .catch(error => console.error('Erro ao buscar produtos:', error));
+    });
+
+   function adicionarProduto(produto) {
+    let tabela = document.getElementById("productsTable").getElementsByTagName("tbody")[0];
+    
+    // Cria a nova linha antes de definir o conteúdo
+    let novaLinha = tabela.insertRow();
+    let index = tabela.rows.length - 1; // Índice baseado na posição real
+
+    // Define o conteúdo da linha
+    novaLinha.innerHTML = `
+        <td>
+            ${produto.productName}
+            <input type="hidden" name="MaintenanceDto.MaintenanceProducts[${index}].StockId" value="${produto.id}" />
+        </td>
+        <td>${produto.productQuantity}</td>
+        <td>
+            <input type="number" 
+                   name="MaintenanceDto.MaintenanceProducts[${index}].QuantityUsed" 
+                   value="1" 
+                   min="1" 
+                   max="${produto.productQuantity}" 
+                   class="form-control" />
+        </td>
+        <td>
+            <button type="button" class="btn btn-danger" onclick="removerProduto(this)">Remover</button>
+        </td>
+    `;
+}
+
+function removerProduto(botao) {
+    let linha = botao.closest("tr");
+    linha.remove();
+    
+    // Atualiza os índices após remoção
+    let tabela = document.getElementById("productsTable").getElementsByTagName("tbody")[0];
+    Array.from(tabela.rows).forEach((row, index) => {
+        row.querySelector("input[name*='StockId']").name = `MaintenanceDto.MaintenanceProducts[${index}].StockId`;
+        row.querySelector("input[name*='QuantityUsed']").name = `MaintenanceDto.MaintenanceProducts[${index}].QuantityUsed`;
+        console.log(tabela);
+    });
+}
+function atualizarIndices() {
+    const linhas = document.querySelectorAll("#productsTable tbody tr");
+    linhas.forEach((linha, index) => {
+        linha.querySelector("input[name*='StockId']").name = `MaintenanceDto.MaintenanceProducts[${index}].StockId`;
+        linha.querySelector("input[name*='QuantityUsed']").name = `MaintenanceDto.MaintenanceProducts[${index}].QuantityUsed`;
+    });
+}
+
+function removerProduto(botao) {
+    botao.closest("tr").remove();
+    atualizarIndices(); // Atualize os índices após remoção
+}
+    </script>
+
+       
+}

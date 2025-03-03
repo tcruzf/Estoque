@@ -1,0 +1,80 @@
+
+@await Html.PartialAsync("Partials/_ListPartial")
+        @section Scripts {
+            <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+            <script>
+                $('#deviceTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '/Maintenances/AllMaintenances', // URL do endpoint no backend
+                        type: 'POST',
+                        dataType: 'json'
+                    },
+                    columns: [
+                        { data: 'simpleDesc', name: 'SimpleDesc' },
+                        { data: 'serialNumber', name: 'SerialNumber' },
+                        { data: 'device', name: 'Device' },
+                        { data: 'maintenanceNumber', name: 'MaintenanceNumber' },
+                        { data: 'user', name: 'User' },
+                        {
+                            data: null, // Coluna para ações
+                            orderable: false,
+                            searchable: false,
+                            render: function (data, type, row) {
+                              return `
+        <a class="btn btn-sm btn-success" href="/Devices/GetMaintenances/${row.deviceId}" onclick="displayBusyIndicator()">
+            <span class="fa fa-eye"></span> Ver
+        </a>
+        <a class="btn btn-sm btn-warning" href="/Maintenances/ChangeMaintenance/${row.id}" onclick="displayBusyIndicator()">
+            <span class="fa fa-edit"></span> Editar
+        </a>
+    `;
+                            }
+                        }
+                    ],
+                    language: {
+                        processing: `<div class="text-center">
+                        <div class="spinner-border text-primary" style="width: 4rem; height: 4rem;" role="status">
+                            <span class="visually-hidden">Carregando...</span>
+                        </div>
+                     </div>`,
+                        lengthMenu: 'Exibir _MENU_ registros por página',
+                        zeroRecords: 'Nenhum registro encontrado',
+                        info: 'Exibindo página _PAGE_ de _PAGES_',
+                        infoEmpty: 'Nenhum registro disponível',
+                        infoFiltered: '(filtrado de _MAX_ registros no total)',
+                        search: 'Pesquisar:',
+                        paginate: {
+                            first: 'Primeiro',
+                            last: 'Último',
+                            next: 'Próximo',
+                            previous: 'Anterior'
+                        }
+                    },
+                });
+
+                 @if (TempData["MaintenanceSuccessMessage"] != null)
+                 {
+                    <text>
+                    Swal.fire({
+                        icon: 'success',
+                        title: '@TempData["MaintenanceSuccessMessage"]',
+                        showConfirmButton: true
+                    });
+                    </text>
+                  }
+                   @if (TempData["MaintenanceErrorMessage"] != null)
+                 {
+                    <text>
+                    Swal.fire({
+                        icon: 'error',
+                        title: '@TempData["MaintenanceErrorMessage"]',
+                        showConfirmButton: true
+                    });
+                    </text>
+                  }
+
+
+            </script>
+        }
