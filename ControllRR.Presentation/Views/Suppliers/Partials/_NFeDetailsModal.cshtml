@@ -68,6 +68,11 @@
 </div>
 
 <script>
+    $(document).ajaxStart(function() {
+    $('#globalLoading').fadeIn(200);
+}).ajaxStop(function() {
+    $('#globalLoading').fadeOut(200);
+});
  var modalInstance;
  $('.modal-backdrop').remove(); // Remove qualquer overlay residual
 function loadNFeDetails(orderId) {

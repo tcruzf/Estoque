@@ -114,7 +114,7 @@
   </nav>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a asp-action="Index" asp-controller="Home" class="brand-link">
+    <a asp-action="Index" asp-controller="Home" class="brand-link" onclick="displayBusyIndicator()">
         <img src="~/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">ControllRR</span>
     </a>
@@ -157,19 +157,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a asp-action="MaintenanceList" asp-controller="Maintenances" class="nav-link">
+                            <a asp-action="MaintenanceList" asp-controller="Maintenances" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Listar</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-action="New" asp-controller="Maintenances" class="nav-link">
+                            <a asp-action="New" asp-controller="Maintenances" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Nova</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-action="External" asp-controller="Maintenances" class="nav-link">
+                            <a asp-action="External" asp-controller="Maintenances" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Atendimento Externo</p>
                             </a>
@@ -188,25 +188,25 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a asp-action="SearchProduct" asp-controller="Stocks" class="nav-link">
+                            <a asp-action="SearchProduct" asp-controller="Stocks" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Listar Produtos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-action="NewProduct" asp-controller="Stocks" class="nav-link">
+                            <a asp-action="NewProduct" asp-controller="Stocks" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Inserir Produto</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-action="CreateNewSupplier" asp-controller="Suppliers" class="nav-link">
+                            <a asp-action="CreateNewSupplier" asp-controller="Suppliers" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Corrigir Estoque</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-action="ReportProduct" asp-controller="Stocks" class="nav-link">
+                            <a asp-action="ReportProduct" asp-controller="Stocks" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Relatórios</p>
                             </a>
@@ -226,26 +226,26 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a asp-action="CreateNewSupplier" asp-controller="Suppliers" class="nav-link">
+                            <a asp-action="CreateNewSupplier" asp-controller="Suppliers" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Novo Fornecedor</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-action="SearchProduct" asp-controller="Stocks" class="nav-link">
+                            <a asp-action="SearchProduct" asp-controller="Stocks" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Buscar  Fornecedor</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-action="NewProduct" asp-controller="Stocks" class="nav-link">
+                            <a asp-action="NewProduct" asp-controller="Stocks" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Inserir Produto</p>
                             </a>
                         </li>
                         
                         <li class="nav-item">
-                            <a asp-action="ReportProduct" asp-controller="Stocks" class="nav-link">
+                            <a asp-action="ReportProduct" asp-controller="Stocks" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Relatórios</p>
                             </a>
@@ -264,13 +264,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a asp-action="GetAll" asp-controller="Users" class="nav-link">
+                            <a asp-action="GetAll" asp-controller="Users" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Listar</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-action="CreateNewUser" asp-controller="Users" class="nav-link">
+                            <a asp-action="CreateNewUser" asp-controller="Users" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Novo</p>
                             </a>
@@ -289,13 +289,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a asp-action="GetAll" asp-controller="Sectors" class="nav-link">
+                            <a asp-action="GetAll" asp-controller="Sectors" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Ver Todos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-action="CreateNewSector" asp-controller="Sectors" class="nav-link">
+                            <a asp-action="CreateNewSector" asp-controller="Sectors" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Novo</p>
                             </a>
@@ -313,13 +313,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a asp-action="List" asp-controller="Devices" class="nav-link">
+                            <a asp-action="List" asp-controller="Devices" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Ver Todos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a asp-action="CreateNew" asp-controller="Devices" class="nav-link">
+                            <a asp-action="CreateNew" asp-controller="Devices" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Novo</p>
                             </a>
@@ -338,13 +338,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="~/Identity/Account/Manage" class="nav-link">
+                            <a href="~/Identity/Account/Manage" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Minha Conta</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/Users/CreateNewUser" class="nav-link">
+                            <a href="/Users/CreateNewUser" class="nav-link" onclick="displayBusyIndicator()">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Cadastrar Operador</p>
                             </a>
@@ -358,7 +358,7 @@
                         </li>
                         </ul>
                         <li class="nav-item">
-                            <form asp-area="Identity" asp-page="/Account/Logout" method="post">
+                            <form asp-area="Identity" asp-page="/Account/Logout" method="post" onclick="displayBusyIndicator()">
                                 <button type="submit" class="nav-link btn btn-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Sair</p>
