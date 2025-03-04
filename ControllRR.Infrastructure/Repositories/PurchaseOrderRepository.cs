@@ -70,6 +70,7 @@ public class PurchaseOrderRepository : BaseRepository<PurchaseOrder>, IPurchaseO
              d.IssuerCNPJ.Contains(termo) ||
              d.IssuerIE.Contains(termo))
              .Include(j => j.Items)
-             .ToListAsync();
+                .AsNoTracking()
+                    .ToListAsync();
         }
 }

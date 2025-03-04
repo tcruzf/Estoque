@@ -66,17 +66,18 @@ public class StockService : IStockService
             var stockRepo = _uow.GetRepository<IStockRepository>();
             await stockRepo.AddAsync(stock);
             await _uow.SaveChangesAsync();
-            // Adiciona a movimentação inicial, acho que os calculos estão corretos. Está funcionando kkk
-            await _stockManagementService.AddMovementAsync(
+            // Adiciona a movimentação inicial, acho que os calculos estão corretos. Está funcionando kkk 
+          
+            var purchaseOrderRepo = _uow.GetRepository<IPurchaseOrderRepository>();
+            var orderResult = await purchaseOrderRepo.GetOrderByInvoiceNumber(stock.InvoiceNumber);
+              await _stockManagementService.AddMovementAsync(
                 stock.Id,
                 StockMovementType.Entrada,
                 stockDto.ProductQuantity,
                 DateTime.Now,
-                null
+                null,
+                orderResult.Id
             );
-            var purchaseOrderRepo = _uow.GetRepository<IPurchaseOrderRepository>();
-            var orderResult = await purchaseOrderRepo.GetOrderByInvoiceNumber(stock.InvoiceNumber);
-
             var purchaseItemDto = new PurchaseItemDto
             {
                 PurchaseOrderId = orderResult.Id,

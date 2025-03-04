@@ -111,7 +111,7 @@ public class PurchaseOrderService : IPurchaseOrderService
             includes: q => q
                 .Include(s => s.Supplier)
                     ,
-           // x => x.Id.ToString(),
+            x => x.Id.ToString(),
             x => x.IssuerCNPJ,
             x => x.IssuerIE,
             x => x.NFeAccessKey,

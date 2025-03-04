@@ -66,6 +66,7 @@ public partial class ControllRRContext : IdentityDbContext<ApplicationUser>
     // NFeSource foi transformado em um Enum. Portanto, não é necessario sua presença no context.
     //public virtual DbSet<NFeSource> NFeSources {get; set;}
     public virtual DbSet<PIS> PIS {get; set;}
+    public virtual DbSet<CEST> CESTs {get; set;}
 
 
 

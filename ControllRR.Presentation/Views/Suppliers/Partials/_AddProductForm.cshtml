@@ -10,8 +10,9 @@
     <label asp-for="InvoiceNumber" class="control-label"></label>
     <!-- Campo visível para busca (ID único) -->
     <input id="invoiceNumberSearch" class="form-control" placeholder="Procure pelo número da ordem"/>
-    <!-- Campo hidden para valor real (ID único) -->
+    <!-- Campo hidden para valor real (ID único)  -->
     <input type="hidden" asp-for="InvoiceNumber" id="invoiceNumberHidden" />
+    <input type="hidden" asp-for="PurchaseOrderId" id="purchaseOrderId"/>
     <span asp-validation-for="InvoiceNumber" class="text-danger"></span>
 </div>
  <div class="form-group col-md-2">

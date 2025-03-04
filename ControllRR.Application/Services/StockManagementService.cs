@@ -33,8 +33,8 @@ public class StockManagementService : IStockManagementService
         return _mapper.Map<List<StockManagementDto>>(stockProductInfo);
     }
 
-    public async Task AddMovementAsync(int stockId, StockMovementType type, int quantity, DateTime movementDate, int? maintenanceId = null)
-    {
+    public async Task AddMovementAsync(int stockId, StockMovementType type, int quantity, DateTime movementDate, int? maintenanceId = null, int? purchaseOrderId =null)
+    { 
         //await _uow.BeginTransactionAsync();
         var stock = await _stockRepository.GetByIdAsync(stockId);
         if (stock == null)
@@ -57,7 +57,8 @@ public class StockManagementService : IStockManagementService
             MovementType = type,
             Quantity = quantity,
             MovementDate = movementDate,
-            MaintenanceId = maintenanceId
+            MaintenanceId = maintenanceId,
+            PurchaseOrderId = purchaseOrderId
         };
 
         await _stockManagementRepository.AddAsync(movement);

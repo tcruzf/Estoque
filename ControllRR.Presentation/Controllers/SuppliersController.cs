@@ -90,13 +90,7 @@ public class SuppliersController : Controller
     [HttpPost]
     public async Task<IActionResult> SupplierNewProduct(StockDto model)//
     {
-        if (model.InvoiceNumber != null)
-            //TempData["ProductSuccessMessage"] = "Invoice não é nulo!";
-            System.Console.WriteLine("############################################################");
-        System.Console.WriteLine(model.InvoiceNumber);
-        System.Console.WriteLine("############################################################");
-
-        /*if (!ModelState.IsValid)
+        /*if (!ModelState.IsValid) // Por hora deixei desativado até entender onde esta acontecendo o erro. Embora pareça ter desaparecido.
         {
             TempData["ErrorMessage"] = "Dados inválidos! Verifique os campos e tente novamente.";
             return RedirectToAction("CreateNewSupplier", new { id = model.SupplierId });
@@ -129,14 +123,15 @@ public class SuppliersController : Controller
 
         try
         {
+            // Todos os meus calculos devem ser movidos para a classe de serviço responsavel // 
             // Calcular TotalAmount e TotalTaxes com base nos itens (MOVIDO PARA SERVICES)
             // model.TotalAmount = model.Items.Sum(item => item.Quantity * item.UnitPrice);
-            //model.TotalTaxes = model.TotalAmount * 0.18m; // Exemplo: 18% de imposto
+            // model.TotalTaxes = model.TotalAmount * 0.18m; // Exemplo: 18% de imposto
             // Definir data de emissão da NF-e
-            //model.NFeEmissionDate = DateTime.Now;
-            //model.OrderDate = DateTime.Now;
-            //model.NFeAccessKey="Fsv5474ffasdpPmj--v2";
-            //var sup = model.SupplierId;
+            // model.NFeEmissionDate = DateTime.Now;
+            // model.OrderDate = DateTime.Now;
+            // model.NFeAccessKey="Fsv5474ffasdpPmj--v2";
+            // var sup = model.SupplierId;
 
             var result = await _purchaseOrderService.CreateNewSupplierOrder(model);
             if (result.Success)
@@ -177,6 +172,7 @@ public class SuppliersController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = "Manager, Admin")]
     public async Task<IActionResult> GetPurchaseOrders(int supplierId)
     {
         var orders = await _purchaseOrderService.GetBySupplierAsync(supplierId);
@@ -184,6 +180,7 @@ public class SuppliersController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = "Manager, Admin")]
     public async Task<IActionResult> ValidateCnpj(string cnpj)
     {
         try
@@ -198,15 +195,16 @@ public class SuppliersController : Controller
     }
 
     [HttpGet("ShowNfeDetails/{id}")]
+    [Authorize(Roles = "Manager, Admin")]
     public async Task<IActionResult> ShowNfeDetails(int id)
     {
         try
         {
-        var order = await _purchaseOrderService.GetOrdersById(id);
-        //return Json(order);
-        return PartialView("Partials/_NFeDetailsModal", order);
+            var order = await _purchaseOrderService.GetOrdersById(id);
+            //return Json(order);
+            return PartialView("Partials/_NFeDetailsModal", order);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }

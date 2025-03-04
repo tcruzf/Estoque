@@ -3,6 +3,7 @@ using System;
 using ControllRR.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControllRR.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ControllRRContext))]
-    partial class ControllRRContextModelSnapshot : ModelSnapshot
+    [Migration("20250304230544_EntityCest")]
+    partial class EntityCest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,26 +99,6 @@ namespace ControllRR.Infrastructure.Data.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("ControllRR.Domain.Entities.BrazilianTaxs.CEST", b =>
-                {
-                    b.Property<string>("CodigoTbc")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
-
-                    b.Property<string>("DescTbc")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("LegalTbc")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NcmTbc")
-                        .HasColumnType("int");
-
-                    b.HasKey("CodigoTbc");
-
-                    b.ToTable("CESTs");
                 });
 
             modelBuilder.Entity("ControllRR.Domain.Entities.BrazilianTaxs.CFOP", b =>
