@@ -6,7 +6,7 @@ function displayBusyIndicator() {
     document.getElementById("loading").style.display = "block";
   }
 
-
+/*
 
 
 $(document).ready(function () {
@@ -17,7 +17,7 @@ getTemp();
     getMem();
     getDisk();
 });
-/*
+
 function getTemp() {
     $.ajax({
         url: 'temperature.json.php',

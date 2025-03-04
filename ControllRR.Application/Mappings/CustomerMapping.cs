@@ -7,6 +7,11 @@ public class CustomerMappingProfile : Profile
 {
     public CustomerMappingProfile()
     {
-        CreateMap<Customer, CustomerDto>().ReverseMap();
+        CreateMap<CustomerDto, Customer>()
+            .ForMember(dest => dest.ContactInfo, opt => opt.MapFrom(src => src.ContactInfo))
+            .ReverseMap();
+
+        CreateMap<ContactInfoDto, ContactInfo>()
+            .ReverseMap();
     }
 }

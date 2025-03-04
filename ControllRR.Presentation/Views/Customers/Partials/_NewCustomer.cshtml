@@ -1,0 +1,57 @@
+@*/Views/Customers/_NewCustomer.cshtml*@
+@model ControllRR.Presentation.ViewModels.CustomerViewModel;
+@*@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationSummary()
+    </div>
+}*@
+<form asp-controller="Customers" asp-action="InsertCustomer" method="post">
+    @Html.AntiForgeryToken()
+    <div class="row">
+     <div class="form-group col-md-4">
+    <label asp-for="CustomerDto.Name"></label>
+    <input asp-for="CustomerDto.Name" class="form-control input-sm" />
+    <span asp-validation-for="CustomerDto.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-3">
+    <label asp-for="CustomerDto.CPF_CNPJ"></label>
+    <input asp-for="CustomerDto.CPF_CNPJ" class="form-control input-sm" />
+    <span asp-validation-for="CustomerDto.CPF_CNPJ" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-4">
+    <label asp-for="CustomerDto.ContactInfo.Email"></label>
+    <input asp-for="CustomerDto.ContactInfo.Email" class="form-control input-sm" />
+    <span asp-validation-for="CustomerDto.ContactInfo.Email" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-2">
+    <label asp-for="CustomerDto.ContactInfo.Phone"></label>
+    <input asp-for="CustomerDto.ContactInfo.Phone" class="form-control input-sm" />
+    <span asp-validation-for="CustomerDto.ContactInfo.Phone" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-2">
+    <label asp-for="CustomerDto.ContactInfo.Street"></label>
+    <input asp-for="CustomerDto.ContactInfo.Street" class="form-control input-sm" />
+    <span asp-validation-for="CustomerDto.ContactInfo.Street" class="text-danger"></span>
+    </div> 
+   
+    <div class="form-group col-md-2">
+    <label asp-for="CustomerDto.ContactInfo.Neigh"></label>
+    <input asp-for="CustomerDto.ContactInfo.Neigh" class="form-control input-sm" />
+    <span asp-validation-for="CustomerDto.ContactInfo.Neigh" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-2">
+    <label asp-for="CustomerDto.ContactInfo.CEP"></label>
+    <input asp-for="CustomerDto.ContactInfo.CEP" class="form-control input-sm" />
+    <span asp-validation-for="CustomerDto.ContactInfo.CEP" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-3">
+    <label asp-for="CustomerDto.ContactInfo.WhattsApp"></label>
+    <input asp-for="CustomerDto.ContactInfo.WhattsApp" class="form-control input-sm" />
+    <span asp-validation-for="CustomerDto.ContactInfo.WhattsApp" class="text-danger"></span>
+    </div>
+    </div>
+    <div class="mt-4">
+    <button type="submit" class="btn btn-success" >Salvar</button>
+    </div>
+</form>

@@ -6,4 +6,5 @@ namespace ControllRR.Application.Interfaces;
 public interface ICustomerService
 {
     Task<List<CustomerDto>> FindAllCustomersAsync();
+    Task InsertAsync(CustomerDto customerDto);
 }

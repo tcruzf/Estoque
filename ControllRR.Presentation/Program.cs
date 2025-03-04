@@ -86,7 +86,8 @@ builder.Services.AddAutoMapper(
     typeof(MaintenanceProductProfile),
     typeof(SupplierMappingProfile),
     typeof(PurchaseOrderMappingProfile),
-    typeof(CustomerMappingProfile)
+    typeof(CustomerMappingProfile),
+    typeof(ContactInfoMapping)
     //typeof()
 );
  

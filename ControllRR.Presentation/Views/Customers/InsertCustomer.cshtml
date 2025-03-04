@@ -1,0 +1,29 @@
+@*/view/customer/InsertCustomer.cshtml*@
+@model ControllRR.Presentation.ViewModels.CustomerViewModel
+
+@{
+    ViewData["Title"] = "Cadastro de Clientes";
+}
+<div class="container-fluid px-4">
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+        <li class="breadcrumb-item active">Clientes</li>
+        <li class="breadcrumb-item active">Criar</li>
+    </ol>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-edit me-1"></i>
+           Novo Cliente
+        </div>
+        <div class="card-body">
+            @await Html.PartialAsync("Partials/_NewCustomer", Model)
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+       <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}
