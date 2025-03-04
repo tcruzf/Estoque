@@ -36,7 +36,7 @@ public class SupplierDto
     [Display(Name = "Tipo de pessoa")]
     public PersonType? PersonType { get; set; }
     [Display(Name = "Área/Ramo de atuação")]
-    public string? ActivityArea { get; set; }
+    public string? ActivityArea { get; set; }//
 
 
 }
