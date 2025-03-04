@@ -1,3 +1,5 @@
+@using ControllRR.Application.Dto
+@*/Views/Shared/Components/SupplierPurchaseOrders/Default.cshtml*@
 @model IEnumerable<ControllRR.Application.Dto.PurchaseOrderDto>
 
 @if (Model.Any())
@@ -13,16 +15,23 @@
         </thead>
         <tbody>
             @foreach (var order in Model)
-            {
-                <tr>
-                    <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
-                    <td>@order.InvoiceNumber</td>
-                    <td>@order.TotalAmount.ToString("C")</td>
-                    <td>
-                     <a class="btn btn-sm btn-success" href="/Suppliers/ShowNfeDetails/@order.Id" onclick="displayBusyIndicator()"><span class="fa fa-eye"></span> Ver</a>
-                    </td>
-                </tr>
-            }
+{
+    <tr>
+        <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
+        <td>@order.InvoiceNumber</td>
+        <td>@order.TotalAmount.ToString("C")</td>
+        <td>
+            <button class="btn btn-sm btn-success" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#nfeDetailModal"
+                    onclick="loadNFeDetails(@order.Id)">
+                <i class="fas fa-eye"></i> Ver
+            </button>
+        </td>
+    </tr>
+}
+
+@await Html.PartialAsync("Partials/_NFeDetailsModal", new PurchaseOrderDto())
         </tbody>
     </table>
 }

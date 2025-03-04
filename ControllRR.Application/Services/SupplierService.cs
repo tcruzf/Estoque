@@ -45,6 +45,11 @@ public class SupplierService : ISupplierService
             await _uow.BeginTransactionAsync();
             var supplier = _mapper.Map<Supplier>(supplierDto);
             var supplierRepo = _uow.GetRepository<ISupplierRepository>();
+            // Testa se o id já existe no banco
+            var obj = await supplierRepo.ExistsAsync(supplierDto.Id);
+            if(obj == true)
+                throw new InvalidOperationException($"O fornecedor já existe nos registros com cnpj :{supplierDto.CNPJ}");
+
             await supplierRepo.AddAsync(supplier);
             await _uow.SaveChangesAsync();
             await _uow.CommitAsync();
@@ -54,7 +59,7 @@ public class SupplierService : ISupplierService
                 Id = supplier.Id
             };
         }
-        catch (Exception ex)
+        catch (InvalidOperationException ex)
         {
             await _uow.RollbackAsync();
             return new OperationResultDto

@@ -71,7 +71,7 @@ public class MaintenanceRepository : GenericRepository<Maintenance>, IMaintenanc
 
         var existingMaintenance = await _context.Maintenances
             .Include(m => m.MaintenanceProducts)
-            .FirstOrDefaultAsync(m => m.Id == maintenance.Id);
+            .FirstOrDefaultAsync(m => m.Id == maintenance.Id);//
 
         if (existingMaintenance == null) throw new NotFoundException("Manutenção não encontrada");
 

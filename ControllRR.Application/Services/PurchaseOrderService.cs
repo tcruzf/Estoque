@@ -33,9 +33,12 @@ public class PurchaseOrderService : IPurchaseOrderService
             ?? new List<PurchaseOrderDto>();
     }
 
-    Task<List<PurchaseOrderDto>> IPurchaseOrderService.GetOrdersById(int id)
+    public async Task<PurchaseOrderDto> GetOrdersById(int id)
     {
-        throw new NotImplementedException();
+        await _uow.BeginTransactionAsync();
+        var purchaseItemRepo = _uow.GetRepository<IPurchaseOrderRepository>();
+        var purchaseOrder = await purchaseItemRepo.GetByIdAsync(id);
+        return _mapper.Map<PurchaseOrderDto>(purchaseOrder);
     }
 
     /// <summary>
@@ -117,4 +120,12 @@ public class PurchaseOrderService : IPurchaseOrderService
 
         return _mapper.Map<List<PurchaseOrderDto>>(stocksFind);
     }
+
+     public async Task<List<PurchaseOrderDto>> SearchInvoiceNumber(string termo)
+     {
+        await _uow.BeginTransactionAsync();
+        var purchaseOrderRepo = _uow.GetRepository<IPurchaseOrderRepository>();
+        var nfeReturn = await purchaseOrderRepo.Search(termo);
+        return _mapper.Map<List<PurchaseOrderDto>>(nfeReturn);
+     }
 }

@@ -202,7 +202,7 @@
                         <li class="nav-item">
                             <a asp-action="CreateNewSupplier" asp-controller="Suppliers" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Inserir Fornecedor</p>
+                                <p>Corrigir Estoque</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -214,12 +214,51 @@
                     </ul>
                 </li>
 
+
+                <!-- Fornecedores -->
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas f fa-user-circle"></i>
+                        <p>
+                            Fornecedor
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a asp-action="CreateNewSupplier" asp-controller="Suppliers" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Novo Fornecedor</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="SearchProduct" asp-controller="Stocks" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Buscar  Fornecedor</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="NewProduct" asp-controller="Stocks" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Inserir Produto</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a asp-action="ReportProduct" asp-controller="Stocks" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Relatórios</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+               
                 <!-- Usuários -->
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
+                        <i class="nav-icon fas fa-address-book"></i>
                         <p>
-                            Usuários
+                            Clientes
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -266,7 +305,7 @@
                  <!-- Devices -->
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-building"></i>
+                        <i class="nav-icon fas fa-tablet"></i>
                         <p>
                             Dispositivos
                             <i class="right fas fa-angle-left"></i>
@@ -305,11 +344,19 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="~/Identity/Account/Register" class="nav-link">
+                            <a href="/Users/CreateNewUser" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Cadastrar Operador</p>
                             </a>
                         </li>
+                        <ul class="nav-item">
+                        <li class="nav-item">
+                            <a href="/Users/GetAll" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Usuarios</p>
+                            </a>
+                        </li>
+                        </ul>
                         <li class="nav-item">
                             <form asp-area="Identity" asp-page="/Account/Logout" method="post">
                                 <button type="submit" class="nav-link btn btn-link">

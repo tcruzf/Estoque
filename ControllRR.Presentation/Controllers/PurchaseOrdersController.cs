@@ -31,4 +31,15 @@ public class PurchaseOrdersController : Controller
         }).ToList());
 
     }
+
+    [HttpGet]
+    public async Task<IActionResult> SearchOrderFilter(string termo)
+    {
+        if (string.IsNullOrWhiteSpace(termo))
+        { 
+            return Json(new List<object>());
+        }
+        var order = await _purchaseOrderService.SearchInvoiceNumber(termo);
+        return Json(order);
+    }
 }

@@ -1,4 +1,6 @@
-<!-- _NewSupplierForm.cshtml -->
+@*_NewSupplierForm.cshtml*@ 
+
+@using ControllRR.Domain.Enums
 @model ControllRR.Application.Dto.SupplierDto;
 
 <form asp-controller="Suppliers" asp-action="CreateNewSupplier" method="post">
@@ -26,6 +28,25 @@
     <input asp-for="PhoneNumber" class="form-control input-sm" id="supplierPhoneNumber"/>
     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
     </div> 
+    <div class="form-group col-md-4">
+    <label asp-for="CRT"></label>
+    <input asp-for="CRT" class="form-control input-sm" id="supplierCRT"/>
+    <span asp-validation-for="CRT" class="text-danger"></span>
+    </div> 
+     <div class="form-group col-md-4">
+    <label asp-for="IssuerIE"></label>
+    <input asp-for="IssuerIE" class="form-control input-sm" id="supplierIssuerIE"/>
+    <span asp-validation-for="IssuerIE" class="text-danger"></span>
+    </div> 
+     <div class="form-group col-md-4">
+    <label asp-for="ActivityArea"></label>
+    <input asp-for="ActivityArea" class="form-control input-sm" id="supplierActivityArea"/>
+    <span asp-validation-for="IssuerIE" class="text-danger"></span>
+    </div> 
+     <div class="col">
+     <label asp-for="PersonType" class="control-label"></label>
+    <select asp-for="PersonType" class="form-control" asp-items="@Html.GetEnumSelectList<PersonType>()"></select>
+    </div>
     <div class="form-group col-md-4">
     <label asp-for="Address"></label>
     <input asp-for="Address" class="form-control input-sm" id="supplierAddress"/>

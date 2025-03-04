@@ -20,5 +20,6 @@ public interface IDeviceRepository
 
   // Get count of devices
   Task<int> CountDevices();
+  Task<List<Device>> Search(string term);
 
 }

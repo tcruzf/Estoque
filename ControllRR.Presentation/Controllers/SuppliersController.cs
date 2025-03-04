@@ -48,6 +48,7 @@ public class SuppliersController : Controller
         return View(supplierDto);
     }
 
+    [Authorize(Roles = "Manager, Admin")]
     [HttpGet]
     public async Task<IActionResult> GetSupplierProducts(int supplierId)
     {
@@ -63,15 +64,12 @@ public class SuppliersController : Controller
         if (!ModelState.IsValid)
         {
             TempData["ErrorMessage"] = "Fornecedor não pode ser inserido!";
-            System.Console.WriteLine(supplierDto.Name);
-            System.Console.WriteLine(supplierDto.CNPJ);
             return View(supplierDto);
         }
         var result = await _supplierService.InsertAsync(supplierDto);
         if (result.Success)
         {
             //ViewBag.SupplierProducts = await _stockService.GetBySupplierIdAsync(id) ?? new List<StockDto>();
-
             //TempData["SuccessMessage"] = "Fornecedor cadastrado com sucesso!";
             return RedirectToAction(nameof(CreateNewSupplier), new { id = result.Id });
         }
@@ -92,11 +90,11 @@ public class SuppliersController : Controller
     [HttpPost]
     public async Task<IActionResult> SupplierNewProduct(StockDto model)//
     {
-        if(model.InvoiceNumber != null)
+        if (model.InvoiceNumber != null)
             //TempData["ProductSuccessMessage"] = "Invoice não é nulo!";
             System.Console.WriteLine("############################################################");
-            System.Console.WriteLine(model.InvoiceNumber);
-            System.Console.WriteLine("############################################################");
+        System.Console.WriteLine(model.InvoiceNumber);
+        System.Console.WriteLine("############################################################");
 
         /*if (!ModelState.IsValid)
         {
@@ -132,14 +130,14 @@ public class SuppliersController : Controller
         try
         {
             // Calcular TotalAmount e TotalTaxes com base nos itens (MOVIDO PARA SERVICES)
-           // model.TotalAmount = model.Items.Sum(item => item.Quantity * item.UnitPrice);
+            // model.TotalAmount = model.Items.Sum(item => item.Quantity * item.UnitPrice);
             //model.TotalTaxes = model.TotalAmount * 0.18m; // Exemplo: 18% de imposto
             // Definir data de emissão da NF-e
             //model.NFeEmissionDate = DateTime.Now;
             //model.OrderDate = DateTime.Now;
             //model.NFeAccessKey="Fsv5474ffasdpPmj--v2";
             //var sup = model.SupplierId;
-        
+
             var result = await _purchaseOrderService.CreateNewSupplierOrder(model);
             if (result.Success)
                 TempData["ProductSuccessMessage"] = "Produto cadastrado com sucesso!";
@@ -184,7 +182,7 @@ public class SuppliersController : Controller
         var orders = await _purchaseOrderService.GetBySupplierAsync(supplierId);
         return ViewComponent("SupplierPurchaseOrders", new { supplierId });
     }
- 
+
     [HttpGet]
     public async Task<IActionResult> ValidateCnpj(string cnpj)
     {
@@ -196,6 +194,21 @@ public class SuppliersController : Controller
         catch (ArgumentException ex)
         {
             return Json(new { valid = false, message = ex.Message });
+        }
+    }
+
+    [HttpGet("ShowNfeDetails/{id}")]
+    public async Task<IActionResult> ShowNfeDetails(int id)
+    {
+        try
+        {
+        var order = await _purchaseOrderService.GetOrdersById(id);
+        //return Json(order);
+        return PartialView("Partials/_NFeDetailsModal", order);
+        }
+        catch(Exception ex)
+        {
+            throw new Exception(ex.Message);
         }
     }
 }

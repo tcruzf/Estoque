@@ -44,4 +44,9 @@ public class SupplierRepository : GenericRepository<Supplier>, ISupplierReposito
         return await _context.Suppliers.AnyAsync(predicate);
     }
 
+     public async Task<bool> ExistsAsync(int id)
+    {
+
+        return await _context.Suppliers.AnyAsync(x => x.Id == id);
+    }
 }

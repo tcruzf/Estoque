@@ -33,19 +33,19 @@ public class PurchaseOrderRepository : BaseRepository<PurchaseOrder>, IPurchaseO
 
     public async Task<List<PurchaseOrder>> GetBySupplierAsync(int supplierId)
     {
-       
-         return await _context.PurchaseOrders
-        .AsNoTracking() // Evita rastreamento de entidades
-        .Include(po => po.Items)
-        .Where(po => po.SupplierId == supplierId)
-        .ToListAsync() ?? new List<PurchaseOrder>();
+
+        return await _context.PurchaseOrders
+       .AsNoTracking() // Evita rastreamento de entidades
+       .Include(po => po.Items)
+       .Where(po => po.SupplierId == supplierId)
+       .ToListAsync() ?? new List<PurchaseOrder>();
     }
 
-  
+
     public async Task CreateNewSupplierOrder(PurchaseOrder purchaseOrder)
     {
         await AddAsync(purchaseOrder);
-       
+
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public class PurchaseOrderRepository : BaseRepository<PurchaseOrder>, IPurchaseO
     /// <param name="invoiceNumber"></param>
     /// <returns>Uma PurchaseOrder com todos os valores contidos no ato do cadastro</returns>
     /// <exception cref="Exception">Somente se o numero da nota fornecido não for valido</exception>
-    public async Task<PurchaseOrder>  GetOrderByInvoiceNumber(int? invoiceNumber)
+    public async Task<PurchaseOrder> GetOrderByInvoiceNumber(int? invoiceNumber)
     {
         if (invoiceNumber == null)
             throw new Exception("O id fornecido não é valido!");
@@ -62,4 +62,14 @@ public class PurchaseOrderRepository : BaseRepository<PurchaseOrder>, IPurchaseO
         return await _context.PurchaseOrders
                              .FirstOrDefaultAsync(po => po.InvoiceNumber == invoiceNumber.ToString());
     }
+
+    public async Task<List<PurchaseOrder>> Search(string termo)
+    {
+        return await _context.PurchaseOrders
+        .Where(d => d.InvoiceNumber.Contains(termo) ||
+             d.IssuerCNPJ.Contains(termo) ||
+             d.IssuerIE.Contains(termo))
+             .Include(j => j.Items)
+             .ToListAsync();
+        }
 }

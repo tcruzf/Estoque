@@ -62,11 +62,8 @@ public class DevicesController : Controller
         {
             return Json(new List<object>());
         }
-
-        var devices = await _controllRRContext.Devices
-            .Where(d => d.Model.Contains(term) || d.SerialNumber.Contains(term) || d.Type.Contains(term) || d.Identifier.Contains(term))
-            .Select(d => new { d.Id, d.Model, d.SerialNumber, d.Type, d.Identifier })
-            .ToListAsync();
+        //
+        var devices = await _deviceService.Search(term);
 
         return Json(devices);
     }
@@ -172,7 +169,7 @@ public class DevicesController : Controller
         }
         try
         {
-           await _deviceService.UpdateAsync(deviceDto);
+            await _deviceService.UpdateAsync(deviceDto);
             return RedirectToAction(nameof(List));
         }
         catch (ApplicationException e)

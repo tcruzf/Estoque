@@ -160,6 +160,16 @@ public class DeviceRepository : BaseRepository<Device>, IDeviceRepository
         return await _context.Devices.CountAsync();
     }
 
+    public async Task<List<Device>> Search(string term)
+    {
+       return await _context.Devices
+        .Where(d => d.Model.Contains(term) || 
+                    d.SerialNumber.Contains(term) || 
+                    d.Type.Contains(term) || 
+                    d.Identifier.Contains(term))
+        .ToListAsync();
+        
+    }
 
 
 }

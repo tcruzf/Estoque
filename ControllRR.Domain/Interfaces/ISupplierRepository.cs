@@ -9,4 +9,5 @@ public interface ISupplierRepository : IRepository<Supplier>
     Task<List<Supplier>> SearchAsync(string term);
     Task<Supplier?> GetByIdAsync(int id);
     Task<bool> AnyAsync(Expression<Func<Supplier, bool>> predicate);
+    Task<bool> ExistsAsync(int id);
 }
