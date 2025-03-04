@@ -28,8 +28,8 @@ Sistema para controle de manutenções e gestão de produtos com interface web.
 
 ## 🚀 Instalação
 ```bash
-git clone https://github.com/tcruzf/AuthProjeto.git
-cd AuthProjeto
+git clone https://github.com/tcruzf/Estoque.git
+cd Estoque
 dotnet restore
 
 dotnet ef migrations remove -f --project ControllRR.Infrastructure
