@@ -2,7 +2,7 @@ using ControllRR.Domain.Entities;
 
 namespace ControllRR.Domain.Interfaces;
 
-public interface IDeviceRepository
+public interface IDeviceRepository : IRepository<Device>
 {
   Task<List<Device>> FindAllAsync();
   Task<Device> FindByIdAsync(int id);

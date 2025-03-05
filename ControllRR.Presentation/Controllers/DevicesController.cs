@@ -88,7 +88,7 @@ public class DevicesController : Controller
     [HttpGet]
     public async Task<IActionResult> GetMaintenances(int id)
     {
-
+        await Task.Delay(2000);
         var device = await _deviceService.GetMaintenancesAsync(id);
 
 

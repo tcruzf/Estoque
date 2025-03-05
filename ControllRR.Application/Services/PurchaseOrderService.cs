@@ -117,7 +117,7 @@ public class PurchaseOrderService : IPurchaseOrderService
             x => x.NFeAccessKey,
             x => x.InvoiceNumber
         );
-
+ 
         return _mapper.Map<List<PurchaseOrderDto>>(stocksFind);
     }
 

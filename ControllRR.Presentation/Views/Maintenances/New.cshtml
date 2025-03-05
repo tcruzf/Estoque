@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Criar nova Manutenção";
 }
+
 <div class="container-fluid px-4">
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
@@ -15,6 +16,9 @@
             <i class="fas fa-edit me-1"></i>
             Nova Manutenção
         </div>
+        <!-- Loadging -->
+        
+        @await Html.PartialAsync("Partials/_LoadingPartial")
         <div class="card-body">
             @await Html.PartialAsync("Partials/_NewMaintenanceForm", Model)
         </div>
@@ -22,24 +26,7 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-   
-   <script type="text/javascript">
-$(document).ready(function () {
-$("#Seller_DepartmentId").change(function () {
-var f = $("form");
-f.submit(function () {
-var productData = f.serialize();
-$.post(f.attr("action"), Seller_Department, function (result, status) {
-if (result !== null) {
-$("#Seller_Department").text(result.Seller_Department);
-}
-else {
-alert('Invalid ID');
-}
-});
-});
-});
-});
+ 
 
 </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -146,5 +133,6 @@ function removerProduto(botao) {
 }
     </script>
 
-       
+        
+
 }

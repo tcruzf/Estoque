@@ -64,8 +64,37 @@
     
     </div>
     <div class="mt-4">
-    <button type="submit" class="btn btn-success" onclick="displayBusyIndicator()">Salvar</button>
+    <button type="submit" class="btn btn-success"  >Salvar</button>
     </div>
 </form>
+ <script type="text/javascript">
+    // 
+$(document).ready(function () {
+    $('#mainForm').on('submit', function (e) {
+        e.preventDefault(); // Impede submissão tradicional
+        
+        if ($(this).valid()) {
+            displayBusyIndicator();
+            
+            // Submissão AJAX para manter o spinner visível
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function (response) {
+                    window.location.href = '/Maintenances'; // Redireciona após sucesso
+                },
+                error: function (xhr) {
+                    $('#loadingOverlay').hide();
+                    alert('Erro: ' + xhr.responseText);
+                }
+            });
+        }
+    });
+});
+// onclick="displayBusyIndicator()"
+function displayBusyIndicator() {
+    $('#loadingOverlay').addClass('show');
+}
 
-@await Html.PartialAsync("Partials/_LoadingPartial")
+    </script>

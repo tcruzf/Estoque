@@ -326,6 +326,30 @@
                         </li>
                     </ul>
                 </li>
+                 <!-- Documents -->
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-folder"></i>
+                        <p>
+                            Documentos
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a onclick="displayBusyIndicator()" asp-action="FileUpload" asp-controller="Documents" class="nav-link" >
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Enviar</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="CreateNew" asp-controller="Devices" class="nav-link" onclick="displayBusyIndicator()">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Consultar</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 <!-- Sistema -->
                 <li class="nav-item has-treeview">

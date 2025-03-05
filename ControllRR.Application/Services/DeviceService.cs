@@ -56,7 +56,7 @@ public class DeviceService : IDeviceService
     }
 
 
-//
+    //
     public async Task<object> GetDeviceAsync(int start, int length, string searchValue, string sortColumn, string sortDirection)
     {
         (IEnumerable<object> data, int totalRecords, int filteredRecords) =
@@ -76,11 +76,21 @@ public class DeviceService : IDeviceService
         return await _deviceRepository.CountDevices();
     }
 
-    public async Task<DeviceDto> Search(string term)
+    public async Task<List<DeviceDto>> Search(string term)
     {
+        await _uow.BeginTransactionAsync();
         var deviceRepo = _uow.GetRepository<IDeviceRepository>();
+        var devices = await deviceRepo.SearchAsync(
+                term,
+                additionalFilter: null, //  filtro adicional 
+                includes:null,
+                x => x.Id.ToString(),
+                x => x.SerialNumber,
+                x => x.Type,
+                x => x.Identifier,
+                x => x.Model
+            );
 
-        var devices = await deviceRepo.Search(term);
-        return _mapper.Map<DeviceDto>(devices);
+        return _mapper.Map<List<DeviceDto>>(devices);
     }
 }

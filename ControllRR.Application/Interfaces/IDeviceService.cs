@@ -19,6 +19,6 @@ public interface IDeviceService
 
     Task<int> CountDevices();
 
-    Task<DeviceDto> Search(string term);
+    Task<List<DeviceDto>> Search(string term);
 
 }

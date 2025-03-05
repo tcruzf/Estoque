@@ -24,7 +24,7 @@
                      </div>
             </div>
         </div>
-    
+         @await Html.PartialAsync("Partials/_LoadingPartial")
 @if (Model.Maintenances != null && Model.Maintenances.Any())
 {
     <table class="table">

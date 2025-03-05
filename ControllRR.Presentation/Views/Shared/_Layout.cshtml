@@ -87,7 +87,7 @@
         <footer class="main-footer">
             <strong>Copyright &copy;2025 <a href="https://thiagoferreira.net/sistemas/smartbsp">Thiago Cruz</a></strong>
             <div class="float-right d-none d-sm-inline-block">
-                <b>Versão </b> <a href="/s/changelog/">3.0</a>
+                <b>Versão </b> <a href="/s/changelog/">5.0</a>
             </div>
         </footer>
     </div>
@@ -122,35 +122,13 @@
     <div class="spinner"></div>
 </div>
     <!-- Scripts de Controle -->
-    <script>
-        // Controle de carregamento global
-        document.addEventListener('DOMContentLoaded', function() {
-            window.addEventListener('load', function() {
-                const loading = document.getElementById('global-loading');
-                const mainContent = document.getElementById('main-content');
-                
-                loading.classList.add('loading-hidden');
-                mainContent.style.opacity = '1';
-                
-                setTimeout(() => loading.remove(), 500);
-            });
-
-            setTimeout(() => {
-                document.getElementById('global-loading')?.remove();
-                document.getElementById('main-content').style.opacity = '1';
-            }, 5000);
-        });
-
-        // Controle de AJAX Loading
-        $(document)
-            .ajaxStart(() => $('#global-loading').addClass('ajax-loading'))
-            .ajaxStop(() => $('#global-loading').removeClass('ajax-loading'));
-    </script>
+   
 
     @await RenderSectionAsync("Scripts", required: false)
     <div class="loading-overlay" id="globalLoading">
     <div class="spinner"></div>
 </div>
+ @Html.Partial("_LoadingSpinner")
 
 </body>
 </html>

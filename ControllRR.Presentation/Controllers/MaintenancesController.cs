@@ -153,6 +153,7 @@ public class MaintenancesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> New(MaintenanceDto maintenanceDto)
     {
+         await Task.Delay(2000);
         if (!ModelState.IsValid)
         {
             var viewModel = new MaintenanceViewModel
@@ -173,7 +174,7 @@ public class MaintenancesController : Controller
         try
         {
             await _maintenanceService.InsertAsync(maintenanceDto);
-            TempData["MaintenanceSuccessMessage"] = $"Manutençao cadastrada com sucesso com numero : {maintenanceDto.MaintenanceNumber}!";
+            TempData["MaintenanceSuccessMessage"] = $"Manutençao cadastrada com sucesso com numero :!";
             return RedirectToAction(nameof(MaintenanceList));
         }
         catch (Exception ex)
@@ -214,6 +215,7 @@ public class MaintenancesController : Controller
     [HttpGet]
     public async Task<IActionResult> ChangeMaintenance(int? id)
     {
+         await Task.Delay(2000);
         var maintenance = await _maintenanceService.FindByIdAsync(id.Value);
         //var device = await _deviceService.FindByIdAsync(maintenance.Device.Id);
         var users = await _userService.FindAllAsync();
@@ -232,7 +234,7 @@ public class MaintenancesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> ChangeMaintenance(int? id, MaintenanceDto maintenanceDto)
     {
-
+         await Task.Delay(2000);
 
         try
         {
@@ -259,6 +261,7 @@ public class MaintenancesController : Controller
     [HttpGet]
     public async Task<IActionResult> GetProductsTable(int maintenanceId)
     {
+         await Task.Delay(2000);
 
         return PartialView("Partials/_ProductsTable");
     }
@@ -266,6 +269,7 @@ public class MaintenancesController : Controller
     [Authorize(Roles = "Manager, Admin")]
     public async Task<IActionResult> Print(int id)
     {
+         await Task.Delay(2000);
         var list = await _maintenanceService.FindByIdAsync(id);
         if (id == null)
         {

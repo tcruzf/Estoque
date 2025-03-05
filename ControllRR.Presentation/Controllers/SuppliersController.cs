@@ -26,6 +26,7 @@ public class SuppliersController : Controller
     [HttpGet]
     public async Task<IActionResult> GetAllSuppliers()
     {
+        //await Task.Delay(5000);
         return View();
     }
 
@@ -33,6 +34,7 @@ public class SuppliersController : Controller
     [HttpGet]
     public async Task<IActionResult> CreateNewSupplier(int id)
     {
+        await Task.Delay(5000);
         SupplierDto supplierDto;
         if (id == 0)
         {

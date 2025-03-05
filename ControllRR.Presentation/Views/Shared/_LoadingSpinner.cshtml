@@ -1,0 +1,41 @@
+@* Views/Shared/_LoadingSpinner.cshtml *@
+<div id="loadingOverlay" class="loading-overlay">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Carregando...</span>
+    </div>
+</div>
+
+<style>
+    .loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loading-overlay.show {
+        display: flex; /* Exibe o overlay como flex quando ativo */
+    }
+</style>
+<script>
+  $(document).ready(function () {
+            // Mostrar loading em forms convencionais
+            $('#mainForm').submit(function () {
+                $('#loadingOverlay').addClass('show'); // Alterado aqui
+            });
+
+            // Mostrar loading em requisições AJAX
+            $(document).ajaxStart(function () {
+                $('#loadingOverlay').addClass('show'); // Alterado aqui
+            });
+
+            $(document).ajaxStop(function () {
+                $('#loadingOverlay').removeClass('show'); // Alterado aqui
+            });
+            </script>

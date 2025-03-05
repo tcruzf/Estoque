@@ -33,6 +33,7 @@ public class DocumentsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> FileUpload(IFormFile file, string description)
     {
+        await Task.Delay(5000);
 
         if (!ModelState.IsValid)
         {
@@ -79,6 +80,7 @@ public class DocumentsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
+        await Task.Delay(4000);
         try
         {
             await _documentService.DeleteAsync(id);

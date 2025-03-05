@@ -167,7 +167,7 @@ public class DeviceRepository : BaseRepository<Device>, IDeviceRepository
                     d.SerialNumber.Contains(term) || 
                     d.Type.Contains(term) || 
                     d.Identifier.Contains(term))
-        .ToListAsync();
+        .ToListAsync();//
         
     }
 

@@ -27,7 +27,7 @@ public class PurchaseOrdersController : Controller
             IssuerCNPJ = x.IssuerCNPJ,
             IssuerIE = x.IssuerIE,
             NFeAccessKey = x.NFeAccessKey,
-            InvoiceNumber = x.InvoiceNumber
+            InvoiceNumber = x.InvoiceNumber//
         }).ToList());
 
     }
