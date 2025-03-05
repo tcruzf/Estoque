@@ -1,3 +1,4 @@
+@*/views/maintenances/MaintenanceList.cshtml*@
 
 @await Html.PartialAsync("Partials/_ListPartial")
         @section Scripts {
@@ -13,17 +14,21 @@
                     },
                     columns: [
                         { data: 'simpleDesc', name: 'SimpleDesc' },
-                        { data: 'serialNumber', name: 'SerialNumber' },
+                        { data: 'serialNumber', 
+                                name: 'SerialNumber', // Nome correto para ordenação/filtro
+                                orderable: true, // Permitir ordenação
+                                searchable: true // Permitir busca
+                            },
                         { data: 'device', name: 'Device' },
                         { data: 'maintenanceNumber', name: 'MaintenanceNumber' },
-                        { data: 'user', name: 'User' },
+                        { data: 'applicationUser', name: 'ApplicationUser' },
                         {
                             data: null, // Coluna para ações
                             orderable: false,
                             searchable: false,
                             render: function (data, type, row) {
                               return `
-        <a class="btn btn-sm btn-success" href="/Devices/GetMaintenances/${row.deviceId}" onclick="displayBusyIndicator()">
+        <a class="btn btn-sm btn-success" href="/Maintenances/c/PT-BR/show/all/${row.deviceId}/auth_user/acceptable_request/user/" onclick="displayBusyIndicator()">
             <span class="fa fa-eye"></span> Ver
         </a>
         <a class="btn btn-sm btn-warning" href="/Maintenances/ChangeMaintenance/${row.id}" onclick="displayBusyIndicator()">

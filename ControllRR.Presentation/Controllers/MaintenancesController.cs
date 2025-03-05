@@ -153,7 +153,7 @@ public class MaintenancesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> New(MaintenanceDto maintenanceDto)
     {
-         await Task.Delay(2000);
+        //await Task.Delay(2000);
         if (!ModelState.IsValid)
         {
             var viewModel = new MaintenanceViewModel
@@ -174,7 +174,7 @@ public class MaintenancesController : Controller
         try
         {
             await _maintenanceService.InsertAsync(maintenanceDto);
-            TempData["MaintenanceSuccessMessage"] = $"Manutençao cadastrada com sucesso com numero :!";
+            TempData["MaintenanceSuccessMessage"] = $"Manutençao cadastrada com sucesso!";
             return RedirectToAction(nameof(MaintenanceList));
         }
         catch (Exception ex)
@@ -195,7 +195,7 @@ public class MaintenancesController : Controller
     }
 
     [Authorize(Roles = "Manager, Admin")]
-    [HttpPost]
+    [HttpPost]//
     public async Task<JsonResult> AllMaintenances()//
     {
         var draw = Request.Form["draw"].FirstOrDefault();
@@ -215,7 +215,7 @@ public class MaintenancesController : Controller
     [HttpGet]
     public async Task<IActionResult> ChangeMaintenance(int? id)
     {
-         await Task.Delay(2000);
+        //await Task.Delay(2000);
         var maintenance = await _maintenanceService.FindByIdAsync(id.Value);
         //var device = await _deviceService.FindByIdAsync(maintenance.Device.Id);
         var users = await _userService.FindAllAsync();
@@ -230,11 +230,75 @@ public class MaintenancesController : Controller
     }
 
     [Authorize(Roles = "Manager, Admin")]
+    [HttpGet("Devices/a/PT-BR/Maintenances/change/ea5263f5-901f-4a74-9b73-3fc0e530788dpea5263f5-901f-4a74-9b73-3fc0e530788dpf_rd_r=3VQY0R05Z7D70604ZG50&pd_rd_wgKpCCFpd_rd_rd5c713ce-ad9e-44a2-9e2a-504fdddcc6b1pd_rd_iB0DF/{id}/NewRequestChange/8531100d-ca88-45dd-ba21-de3dd971a698&pf_rd_p=8531100d-ca88-45dd-ba21-de3dd971a698&pf_rd_r=GZ8TZHE7H6M7N65T9WPV")]
+    public async Task<IActionResult> ModifierMaintenance(int? id)
+    {
+        //await Task.Delay(1000);
+        var maintenance = await _maintenanceService.FindByIdAsync(id.Value);
+        //var device = await _deviceService.FindByIdAsync(maintenance.Device.Id);
+        var users = await _userService.FindAllAsync();
+
+        MaintenanceViewModel viewModel = new MaintenanceViewModel
+        {
+            ApplicationUserDto = users,
+            MaintenanceDto = maintenance
+
+        };
+        return View("Views/Maintenances/ChangeMaintenanceDevice.cshtml", viewModel);
+        // return Json(viewModel);
+    }
+
+    [Authorize(Roles = "Manager, Admin")]
+    [HttpPost("Devices/c/PT-BR/Maintenances/changed/key/8531100d-ca88-45dd-ba21-de3dd971a698&pf_rd_p8531100d-ca88-45dd-ba21-de3dd971a698&pf_rd_rGZ8TZHE7H6M7N65T9WPV/")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeviceModifierMaintenance(int? id, MaintenanceDto maintenanceDto)
+    {
+        //await Task.Delay(1000);
+
+        try
+        {
+             await _maintenanceService.UpdateAsync(maintenanceDto);
+            TempData["MaintenanceChangeSuccess"] = "Manutenção alterada com sucesso.";
+            //return RedirectToAction(nameof(MaintenanceList));
+            var dev = await _deviceService.GetMaintenancesAsync(maintenanceDto.DeviceId);
+            var devDto = new DeviceDto {
+                
+                Id = dev.Id,
+                Model = dev.Model,
+                DeviceDescription = dev.DeviceDescription,
+                Identifier = dev.Identifier,
+                Maintenances = dev.Maintenances,
+                Sector = dev.Sector,
+                SerialNumber = dev.SerialNumber,
+                Type = dev.Type,
+                SectorId = dev.SectorId
+            };
+            TempData["MaintenanceChangeSuccess"] = "Manutenção alterada com sucesso.";
+            return View("Views/Devices/GetMaintenances.cshtml", devDto);
+            return Json(devDto);
+        }
+        catch (Exception ex)
+        {
+            TempData["MaintenanceErrorMessage"] = "Manutenção não pode ser alterada.";
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return Json(new
+                {
+                    success = false,
+                    error = ex.Message
+                });
+            }
+            return RedirectToAction(nameof(Error), new { message = ex.Message });
+        }
+    }
+
+
+    [Authorize(Roles = "Manager, Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> ChangeMaintenance(int? id, MaintenanceDto maintenanceDto)
     {
-         await Task.Delay(2000);
+        //await Task.Delay(1000);
 
         try
         {
@@ -261,7 +325,7 @@ public class MaintenancesController : Controller
     [HttpGet]
     public async Task<IActionResult> GetProductsTable(int maintenanceId)
     {
-         await Task.Delay(2000);
+        //await Task.Delay(2000);
 
         return PartialView("Partials/_ProductsTable");
     }
@@ -269,7 +333,7 @@ public class MaintenancesController : Controller
     [Authorize(Roles = "Manager, Admin")]
     public async Task<IActionResult> Print(int id)
     {
-         await Task.Delay(2000);
+        await Task.Delay(2000);
         var list = await _maintenanceService.FindByIdAsync(id);
         if (id == null)
         {

@@ -16,6 +16,7 @@
         <div class="card-header">
             Consulta de Manutenção de Serviço ou Atendimento Externo
         </div>
+         @await Html.PartialAsync("Partials/_LoadingPartial")
         <div class="card-body">
             <div class="row mb-3">
                 <!-- Coluna da esquerda -->
@@ -84,9 +85,9 @@
                         <input type="submit" class="btn btn-danger" value="Delete" />
                     }
                 </form>
-                <a asp-action="ChangeMaintenance" class="btn btn-warning" asp-route-id="@Model.Id">Editar</a>
-                <a asp-action="Print" class="btn btn-info" asp-route-id="@Model.Id">Imprimir</a>
-                <a asp-controller="Maintenances" asp-action="Finalize" class="btn btn-success" asp-route-id="@Model.Id">Fechar</a>
+                <a asp-action="ChangeMaintenance" onclick="displayBusyIndicator()" class="btn btn-warning" asp-route-id="@Model.Id">Editar</a>
+                <a asp-action="Print" onclick="displayBusyIndicator()" class="btn btn-info" asp-route-id="@Model.Id">Imprimir</a>
+                <a asp-controller="Maintenances" onclick="displayBusyIndicator()" asp-action="Finalize" class="btn btn-success" asp-route-id="@Model.Id">Fechar</a>
             </div>
         </div>
     </div>

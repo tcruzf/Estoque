@@ -85,10 +85,11 @@ public class DevicesController : Controller
     }
 
     [Authorize(Roles = "Manager, Admin")]
-    [HttpGet]
+    //[HttpGet]
+    [HttpGet("Maintenances/c/PT-BR/show/all/{id}/auth_user/acceptable_request/user/")]
     public async Task<IActionResult> GetMaintenances(int id)
     {
-        await Task.Delay(2000);
+        //await Task.Delay(2000);
         var device = await _deviceService.GetMaintenancesAsync(id);
 
 

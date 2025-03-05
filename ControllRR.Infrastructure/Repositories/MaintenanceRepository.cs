@@ -140,9 +140,9 @@ public class MaintenanceRepository : GenericRepository<Maintenance>, IMaintenanc
                 MaintenanceNumber = x.MaintenanceNumber,
                 Description = x.Description,
                 Device = x.Device.Model,
-                User = x.ApplicationUser.Name,
+                ApplicationUser = x.ApplicationUser.Name,
                 Identifier = x.Device.Identifier,
-                SerialNumber = x.Device.SerialNumber,
+                serialNumber = x.Device.SerialNumber,
                 DeviceId = x.DeviceId//
             })
             .ToListAsync(),
@@ -196,7 +196,7 @@ public class MaintenanceRepository : GenericRepository<Maintenance>, IMaintenanc
         {   //Gambiarra para poder fazer uma porrada de tentativa de pegar um ou outro valor(não vou explicar, tô com a cabeça e o estomago doendo e sem paciencia!)
             query = query.Where(x =>
                 (x.SimpleDesc != null && x.SimpleDesc.ToLower().Contains(searchValue)) ||
-                (x.Device.SerialNumber != null && x.Device.SerialNumber.ToLower().Contains(searchValue)) ||
+                (x.Device.SerialNumber != null && x.Device.SerialNumber.Contains(searchValue)) ||
                 (x.Description != null && x.Description.ToLower().Contains(searchValue)) ||
                 (x.Device != null && x.Device.Model != null && x.Device.Model.ToLower().Contains(searchValue)) ||
                 (x.ApplicationUser != null && x.ApplicationUser.Name != null && x.ApplicationUser.Name.ToLower().Contains(searchValue)) ||
@@ -207,6 +207,10 @@ public class MaintenanceRepository : GenericRepository<Maintenance>, IMaintenanc
 
     private IQueryable<Maintenance> ApplySorting(IQueryable<Maintenance> query, string sortColumn, string sortDirection)
     {
+        if (sortColumn == "serialNumber")
+        {
+            sortColumn = "Device.SerialNumber";
+        }
         return !string.IsNullOrEmpty(sortColumn) && !string.IsNullOrEmpty(sortDirection)
         ? query.OrderBy($"{sortColumn} {sortDirection}")
         : query = query.OrderBy(x => x.Id);

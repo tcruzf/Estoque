@@ -1,6 +1,8 @@
 @model ControllRR.Application.Dto.DeviceDto;
 @{
     ViewData["Title"]="Lista de ordem de serviço por equipamentos";
+    var stringUrl = "8531100d-ca88-45dd-ba21-de3dd971a698&pf_rd_p=8531100d-ca88-45dd-ba21-de3dd971a698&pf_rd_r=GZ8TZHE7H6M7N65T9WPV";
+    var changeCripto = "ea5263f5-901f-4a74-9b73-3fc0e530788dpea5263f5-901f-4a74-9b73-3fc0e530788dpf_rd_r=3VQY0R05Z7D70604ZG50&pd_rd_wgKpCCFpd_rd_rd5c713ce-ad9e-44a2-9e2a-504fdddcc6b1pd_rd_iB0DF";
 }
 <div class="container-fluid">
     <h2 class="my-4">@ViewData["Title"]</h2>
@@ -16,7 +18,7 @@
  
     <div class="card">
         <div class="card-header">
-            Detalhes das ordens existentes
+            Detalhes das ordens existentes para o dispositivo :::@Model.Identifier
         </div>
         <div class="card-body">
             <div class="row">
@@ -46,9 +48,10 @@
                 <td>@maintenance.OpenDate</td>
                 <td>@maintenance.Status</td>
                 <td>
-                    <a asp-controller="Maintenances" asp-action="ChangeMaintenance" onclick="displayBusyIndicator()" class="btn btn-success" asp-route-id="@maintenance.Id">Editar</a>
-                    <a asp-controller="Maintenances" asp-action="Details" onclick="displayBusyIndicator()" class="btn btn-primary" asp-route-id="@maintenance.Id">Detailhes</a>
-                    <a asp-controller="Maintenances" asp-action="Delete" onclick="displayBusyIndicator()" class="btn btn-danger" asp-route-id="@maintenance.Id">Deletar</a>
+                    <a class="btn btn-sm btn-success" href="~/Devices/a/PT-BR/Maintenances/change/@changeCripto/@maintenance.Id/NewRequestChange/@stringUrl" onclick="displayBusyIndicator()"><span class="fa fa-edit"></span> Alterar Manutenção </a>
+                    <a asp-controller="Maintenances" asp-action="ChangeMaintenance" onclick="displayBusyIndicator()" class="btn btn-sm btn-success" asp-route-id="@maintenance.Id">Editar</a>
+                    <a asp-controller="Maintenances" asp-action="Details" onclick="displayBusyIndicator()" class="btn btn-sm  btn-primary" asp-route-id="@maintenance.Id">Detailhes</a>
+                    <a asp-controller="Maintenances" asp-action="Delete" onclick="displayBusyIndicator()" class="btn btn-sm btn-danger" asp-route-id="@maintenance.Id">Deletar</a>
             </td>
             </tr>
         }
@@ -63,3 +66,25 @@ else
 {
     <p>Não há ordens de serviço cadastrados para este dispositivo!</p>
 }
+<script>
+@if (TempData["MaintenanceSuccessMessage"] != null)
+                 {
+                    <text>
+                    Swal.fire({
+                        icon: 'success',
+                        title: '@TempData["MaintenanceChangeSuccess"]',
+                        showConfirmButton: true
+                    });
+                    </text>
+                  }
+                   @if (TempData["MaintenanceChangeSuccess"] != null)
+                 {
+                    <text>
+                    Swal.fire({
+                        icon: 'error',
+                        title: '@TempData["MaintenanceChangeSuccess"]',
+                        showConfirmButton: true
+                    });
+                    </text>
+                  }
+</script>
