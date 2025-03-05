@@ -132,8 +132,14 @@
                                             class="form-control" />
                                         <span asp-validation-for="StockDto.ProductQuantity" class="text-danger"></span>
                                     </div>
+                                  <!--  <div class="col">
+                                        <label asp-for="StockDto.PurchaseOrderId"></label>
+                                        <input asp-for="StockDto.PurchaseOrderId" id="StockDto_PurchaseOrderId" readonly
+                                            class="form-control" />
+                                        <span asp-validation-for="StockDto.PurchaseOrderId" class="text-danger"></span>
+                                    </div>
 
-                                    <!--  seção abaixo dos campos existentes -->
+                                      seção abaixo dos campos existentes -->
                                     <div class="card mt-4">
                                         <div class="card-header">Movimentações deste Item</div>
                                         <div class="card-body">
@@ -143,7 +149,7 @@
                                                         <th>Data</th>
                                                         <th>Tipo</th>
                                                         <th>Quantidade</th>
-                                                        <th>Manutenção Relacionada</th>
+                                                        <th>Manutenção Relacionada/NFe Relacionada</th>
                                                     </tr>
                                                 </thead>
                                                <tbody id="movementsBody">
@@ -189,7 +195,8 @@
                                     app: item.productApplication,
                                     ref: item.productReference,
                                     qtt: item.productQuantity,
-                                    movements: item.movements
+                                    movements: item.movements,
+                                    order: item.purchaseOrder
                                 };
                             }));
                         }
@@ -210,41 +217,41 @@
                 $("#StockDto_ProductApplication").val(item.app);
                 $("#StockDto_ProductReference").val(item.ref);
                 $("#StockDto_ProductQuantity").val(item.qtt);
-                updateMovementsTable(item.movements);
+                $("#StockDto_PurchaseOrderId").val(item.order);
+                updateMovementsTable(item.movements,item.purchaseOrder);
             }
-
+ 
             // Função para atualizar a tabela de movimentações
-            function updateMovementsTable(movements) {
-                const tbody = $("#movementsTable tbody");
-                tbody.empty();
+        function updateMovementsTable(movements, purchaseOrder) {
+    const tbody = $("#movementsBody");
+    tbody.empty();
 
-                if (movements && movements.length > 0) {
-                    movements.forEach(movement => {
-                        const movementType = movement.movementType == 1 ? "Entrada" : "Saída";
-                        const movementDate = new Date(movement.movementDate).toLocaleDateString('pt-BR');
-                        const maintenanceLink = movement.maintenanceId ? 
-                            `<a href="/Maintenances/Details/${movement.maintenanceId}" class="btn btn-link">
-                                ${movement.maintenanceNumber || 'Ver Manutenção'}
-                            </a>` : 
-                            'N/A';
+    if (movements && movements.length > 0) {
+        
+        movements.forEach(movement => {
+            //console.log("Purchase Order:", movement.relatedOrderId);
+            const movementType = movement.movementType === 1 ? "Entrada" : "Saída";
+            const relatedInfo = movement.movementType === 1 
+                ? (movement.relatedOrderId ? `<a href="/temp/temp${movement.relatedOrderId}">NFe #${movement.relatedOrderId}` : 'Ajuste Estoque')
+                : (movement.maintenanceId 
+                    ? `<a href="/Maintenances/Details/${movement.maintenanceId}">
+                        ${movement.maintenanceNumber || 'Ver Manutenção'}
+                      </a>` 
+                    : 'Ajuste Estoque');
 
-                        tbody.append(`
-                            <tr>
-                                <td>${movementDate}</td>
-                                <td>${movementType}</td>
-                                <td>${movement.quantity}</td>
-                                <td>${maintenanceLink}</td>
-                            </tr>
-                        `);
-                    });
-                } else {
-                    tbody.append(`
-                        <tr>
-                            <td colspan="4">Nenhuma movimentação registrada.</td>
-                        </tr>
-                    `);
-                }
-            }
+            tbody.append(`
+                <tr>
+                    <td>${movement.formattedMovementDate}</td>
+                    <td>${movementType}</td>
+                    <td>${movement.quantity}</td>
+                    <td>${relatedInfo}</td>
+                </tr>
+            `);
+        });
+    } else {
+        tbody.append("<tr><td colspan='4' class='text-center'>Nenhuma movimentação encontrada</td></tr>");
+    }
+}
 
             // Submit do formulário de movimentação
             $("#movementForm").submit(function (e) {

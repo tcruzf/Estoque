@@ -96,15 +96,19 @@ public class StocksController : Controller
             productApplication = p.ProductApplication,
             productReference = p.ProductReference,
             productQuantity = p.ProductQuantity,
+            purchaseOrder = p.PurchaseOrderId,
             movements = p.Movements.Select(m => new
             {
                 formattedMovementDate = m.MovementDate.ToString("yyyy-MM-dd"),
-                movementType = m.MovementType == (int)StockMovementType.Entrada ? "Entrada" : "Saída", // Retorna tipo de movimentaçaão a ser exibida na pagina de 
+                movementType = m.MovementType,// == (int)StockMovementType.Entrada ? "Entrada" : "Saída", // Retorna tipo de movimentaçaão a ser exibida na pagina de 
                 quantity = m.Quantity,                                                                 // de produtos 
                 movementDate = m.MovementDate,
                 maintenanceId = m.MaintenanceId,
-                maintenanceNumber = m.MaintenanceNumber
-            }).ToList()}));
+                maintenanceNumber = m.MaintenanceNumber,
+                relatedOrderId = m.PurchaseOrderId
+            })
+           
+            .ToList()}));
     }
 
     [Authorize(Roles = "Manager, Admin")]

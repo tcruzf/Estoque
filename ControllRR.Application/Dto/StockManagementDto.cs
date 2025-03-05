@@ -24,4 +24,5 @@ public class StockManagementDto
     public string FormattedMovementDate => MovementDate.ToString("dd/MM/yyyy");
     public int? MaintenanceId { get; set; } // Novo campo
     public string? MaintenanceNumber { get; set; } // Para exibição
+    public string? PurchaseOrderId {get; set;}
 }

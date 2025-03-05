@@ -7,21 +7,21 @@ namespace ControllRR.Application.Dto;
 public class StockDto
 {
     public int Id { get; set; }
-    [Display(Name = "Nome do Produto")]
+    [Display(Name = "Nome ")]
     [Required(ErrorMessage = "O campo {0} é obrigatorio ")]
     [StringLength(255, MinimumLength = 5, ErrorMessage = "{0} minimo {2} e no maximo {1} caracteres")]
     public string? ProductName { get; set; }
-    [Display(Name = "Descrição Simples")]
+    [Display(Name = "Desc. Simples")]
     [Required(ErrorMessage = "O campo {0} é obrigatorio ")]
     [StringLength(20, MinimumLength = 5, ErrorMessage = "{0} minimo {2} e no maximo {1} caracteres")]
     public string? ProductDescription { get; set; }
     [Display(Name = "Quantidade")]
     [Required(ErrorMessage = "O campo {0} é obrigatorio ")]
     public int ProductQuantity { get; set; }
-    [Display(Name = "Aplicação do Produto")]
+    [Display(Name = "Aplicação")]
     [Required(ErrorMessage = "O campo {0} é obrigatorio ")]
     public string? ProductApplication { get; set; }
-    [Display(Name = "Referencia")]
+    [Display(Name = "Referência")]
     [Required(ErrorMessage = "O campo {0} é obrigatorio ")]
     public string? ProductReference { get; set; }
 
