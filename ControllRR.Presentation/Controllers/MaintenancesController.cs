@@ -244,6 +244,7 @@ public class MaintenancesController : Controller
             MaintenanceDto = maintenance
 
         };
+        TempData["MaintenanceDeviceChangeSuccess"] = "Manutenção alterada com sucesso.";
         return View("Views/Maintenances/ChangeMaintenanceDevice.cshtml", viewModel);
         // return Json(viewModel);
     }
