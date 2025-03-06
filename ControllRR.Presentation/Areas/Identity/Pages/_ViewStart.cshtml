@@ -1,4 +1,12 @@
+@using ControllRR.Domain.Entities
 
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+    
 @{
+    @if (SignInManager.IsSignedIn(User))
+     {
     Layout = "/Views/Shared/_Layout.cshtml";
+    }
 }
+

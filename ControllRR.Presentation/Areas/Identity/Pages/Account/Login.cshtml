@@ -5,84 +5,72 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @{
     ViewData["Title"] = "Entrar";
-}
-
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h2>Usando credenciais locais.</h2>
-                <hr />
+} 
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="~/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/css/util.css">
+	<link rel="stylesheet" type="text/css" href="~/css/main.css">
+<!--===============================================================================================-->
+<div>
+    <div class="container-login100" style="background-image: url('/css/Images/inicio.jpg');">
+        <div class="wrap-login100 p-t-30 p-b-50">
+            <span class="login100-form-title p-b-41">
+                ControllRR<br>
+                <h6 class="box-title">Gerenciamento</h6>
+            </span>
+            
+            <form class="login100-form validate-form p-b-33 p-t-5" id="account" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-floating">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-                    <label asp-for="Input.Email" class="form-label"></label>
+                
+                <div class="wrap-input100 validate-input" data-validate="Usuario">
+                    <input asp-for="Input.Email" class="input100" autocomplete="username" placeholder="Usuário" />
+                    <span class="focus-input100" data-placeholder="&#xe82a;"></span>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
-                <div class="form-floating">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
-                    <label asp-for="Input.Password" class="form-label"></label>
+                
+                <div class="wrap-input100 validate-input" data-validate="Digite a Sua Senha">
+                    <input asp-for="Input.Password" class="input100" type="password" autocomplete="current-password" placeholder="Senha" />
+                    <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
-                <div>
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe" class="form-label">
-                            <input class="form-check-input" asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
+                
+                <div class="container-login100-form-btn">
+                    <input type="submit" name="submit" value="Login" class="btn btn-primary btn-lg">
                 </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-                </div>
-                <div>
-                     @if (SignInManager.IsSignedIn(User) && User.IsInRole("ADMIN"))
-                    {
-                    <p>
+                
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole("ADMIN"))
+                {
+                    <div class="text-center p-t-10">
                         <a id="forgot-password" asp-page="./ForgotPassword">Esqueci minha senha</a>
-                    </p>
-                    
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrar um novo usuario</a>
-                    </p>
-                    
-                    <p>
+                    </div>
+                    <div class="text-center p-t-10">
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrar um novo usuário</a>
+                    </div>
+                    <div class="text-center p-t-10">
                         <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar email de confirmação</a>
-                    </p>
-                    }
-                </div>
-            </form>
-        </section>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Outras formas de fazer login</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            Não existe nenhum serviço externo configurado para login.
-                        </p>
                     </div>
                 }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
+            </form>
+        </div>
     </div>
 </div>
 
