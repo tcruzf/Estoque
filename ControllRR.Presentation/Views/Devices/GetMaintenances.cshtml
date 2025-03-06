@@ -67,22 +67,22 @@ else
     <p>Não há ordens de serviço cadastrados para este dispositivo!</p>
 }
 <script>
-@if (TempData["MaintenanceSuccessMessage"] != null)
+@if (TempData["MaintenanceDeviceChangeSuccess"] != null)
                  {
                     <text>
                     Swal.fire({
                         icon: 'success',
-                        title: '@TempData["MaintenanceChangeSuccess"]',
+                        title: '@TempData["MaintenanceDeviceChangeSuccess"]',
                         showConfirmButton: true
                     });
                     </text>
                   }
-                   @if (TempData["MaintenanceChangeSuccess"] != null)
+                   @if (TempData["MaintenanceDeviceChangeError"] != null)
                  {
                     <text>
                     Swal.fire({
                         icon: 'error',
-                        title: '@TempData["MaintenanceChangeSuccess"]',
+                        title: '@TempData["MaintenanceDeviceChangeError"]',
                         showConfirmButton: true
                     });
                     </text>

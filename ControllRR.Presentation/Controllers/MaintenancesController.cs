@@ -258,7 +258,7 @@ public class MaintenancesController : Controller
         try
         {
              await _maintenanceService.UpdateAsync(maintenanceDto);
-            TempData["MaintenanceChangeSuccess"] = "Manutenção alterada com sucesso.";
+            TempData["MaintenanceDeviceChangeSuccess"] = "Manutenção alterada com sucesso.";
             //return RedirectToAction(nameof(MaintenanceList));
             var dev = await _deviceService.GetMaintenancesAsync(maintenanceDto.DeviceId);
             var devDto = new DeviceDto {
@@ -273,13 +273,13 @@ public class MaintenancesController : Controller
                 Type = dev.Type,
                 SectorId = dev.SectorId
             };
-            TempData["MaintenanceChangeSuccess"] = "Manutenção alterada com sucesso.";
+            TempData["MaintenanceDeviceChangeSuccess"] = "Manutenção alterada com sucesso.";
             return View("Views/Devices/GetMaintenances.cshtml", devDto);
             return Json(devDto);
         }
         catch (Exception ex)
         {
-            TempData["MaintenanceErrorMessage"] = "Manutenção não pode ser alterada.";
+            TempData["MaintenanceDeviceChangeError"] = "Manutenção não pode ser alterada.";
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
                 return Json(new
@@ -308,7 +308,7 @@ public class MaintenancesController : Controller
         }
         catch (Exception ex)
         {
-            TempData["MaintenanceErrorMessage"] = "Manutenção não pode ser alterada.";
+            TempData["MaintenanceChangeError"] = "Manutenção não pode ser alterada.";
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
                 return Json(new

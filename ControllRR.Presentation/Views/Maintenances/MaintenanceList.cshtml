@@ -59,22 +59,22 @@
                     },
                 });
 
-                 @if (TempData["MaintenanceSuccessMessage"] != null)
+                 @if (TempData["MaintenanceChangeSuccess"] != null)
                  {
                     <text>
                     Swal.fire({
                         icon: 'success',
-                        title: '@TempData["MaintenanceSuccessMessage"]',
+                        title: '@TempData["MaintenanceChangeSuccess"]',
                         showConfirmButton: true
                     });
                     </text>
                   }
-                   @if (TempData["MaintenanceErrorMessage"] != null)
+                   @if (TempData["MaintenanceChangeError"] != null)
                  {
                     <text>
                     Swal.fire({
                         icon: 'error',
-                        title: '@TempData["MaintenanceErrorMessage"]',
+                        title: '@TempData["MaintenanceChangeError"]',
                         showConfirmButton: true
                     });
                     </text>

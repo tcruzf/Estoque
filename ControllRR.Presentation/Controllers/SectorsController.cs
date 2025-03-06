@@ -30,7 +30,7 @@ public class SectorsController : Controller
     {
         if (!ModelState.IsValid)
         {
-            TempData["SuccessMessage"] = "Setor Não pode ser inserido!";
+            TempData["SectorSuccessMessage"] = "Setor Não pode ser inserido!";
             return View(sectorDto);
         }
         await _sectorService.InsertAsync(sectorDto);
@@ -62,7 +62,7 @@ public class SectorsController : Controller
         return Json(result);
     }
     //
-    
+
     [Authorize(Roles = "Manager, Admin")]
     public async Task<IActionResult> SectorDetails(int id)
     {
@@ -94,14 +94,14 @@ public class SectorsController : Controller
     {
         if (!ModelState.IsValid)
         {
-            TempData["ErrorMessage"] = "Setor não pode ser alterado";
+            TempData["SectorErrorMessage"] = "Setor não pode ser alterado";
             var sectorView = await _sectorService.FindByIdAsync(id.Value);
             return View(sectorView);
         }
         try
         {
             await _sectorService.UpdateAsync(sectorDto);
-            TempData["SuccessMessage"] = "Setor alterado com sucesso.";
+            TempData["SectorSuccessMessage"] = "Setor alterado com sucesso.";
             return RedirectToAction(nameof(GetAll));
 
         }
