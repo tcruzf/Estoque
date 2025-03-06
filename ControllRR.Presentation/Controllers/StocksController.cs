@@ -44,7 +44,7 @@ public class StocksController : Controller
 
         try
         {
-            TempData["SuccessMessage"] = "Produto inserido com sucesso!";
+            TempData["ProductSuccessMessage"] = "Produto inserido com sucesso!";
             // Usa o serviço para toda a lógica
             await _stockService.CreateProductWithInitialMovementAsync(model.StockDto);
             return RedirectToAction("SearchProduct");
@@ -55,7 +55,7 @@ public class StocksController : Controller
 
             // Log para o usuário
             ModelState.AddModelError("", $"Erro interno: {ex.Message}");
-            TempData["ErrorMessage"] = "Ocorreu um erro inesperado ao tentar incluir o produto!";
+            TempData["ProductErrorMessage"] = "Ocorreu um erro inesperado ao tentar incluir o produto!";
             return View(model);
         }
     }
