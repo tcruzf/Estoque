@@ -14,6 +14,8 @@ using ControllRR.Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using ControllRR.Domain.Entities.BrazilianTaxs;
+using ControllRR.Domain.Entities.Radius;
+using ControllRR.Infrastructure.ContextData;
 
 namespace ControllRR.Infrastructure.Data.Context;
 
@@ -50,23 +52,34 @@ public partial class ControllRRContext : IdentityDbContext<ApplicationUser>
     public virtual DbSet<SaleItem> SaleItems { get; set; }
     public virtual DbSet<FinancialRecord> FinancialRecords { get; set; }
     public virtual DbSet<TaxConfiguration> TaxConfigurations { get; set; }
-    public virtual DbSet<CFOP> CFOPs {get; set;}
-    public virtual DbSet<CNAE> CNAEs {get; set;}
-    public virtual DbSet<COFINS> COFINs {get; set;}
-    public virtual DbSet<CSOSN> CSOSNs {get; set;}
-    public virtual DbSet<ICMS> ICMs {get; set;}
-    public virtual DbSet<IcmsDesoneracao> IcmsDesoneracaos {get; set;}
-    public virtual DbSet<IcmsModalidadeBC> IcmsModalidadeBCs {get; set;}
-    public virtual DbSet<IcmsModalidadeST> IcmsModalidadeSTs {get; set;}
-    public virtual DbSet<IcmsOrigem> IcmsOrigems {get; set;}
-    public virtual DbSet<IPI> IPIs {get; set;}
-    public virtual DbSet<IpiEnquadramento> IpiEnquadramentos {get; set;}
-    public virtual DbSet<IpiOperacao> IpiOperacoes {get; set;}
-    public virtual DbSet<NCM> NCMs {get; set;}
+    public virtual DbSet<CFOP> CFOPs { get; set; }
+    public virtual DbSet<CNAE> CNAEs { get; set; }
+    public virtual DbSet<COFINS> COFINs { get; set; }
+    public virtual DbSet<CSOSN> CSOSNs { get; set; }
+    public virtual DbSet<ICMS> ICMs { get; set; }
+    public virtual DbSet<IcmsDesoneracao> IcmsDesoneracaos { get; set; }
+    public virtual DbSet<IcmsModalidadeBC> IcmsModalidadeBCs { get; set; }
+    public virtual DbSet<IcmsModalidadeST> IcmsModalidadeSTs { get; set; }
+    public virtual DbSet<IcmsOrigem> IcmsOrigems { get; set; }
+    public virtual DbSet<IPI> IPIs { get; set; }
+    public virtual DbSet<IpiEnquadramento> IpiEnquadramentos { get; set; }
+    public virtual DbSet<IpiOperacao> IpiOperacoes { get; set; }
+    public virtual DbSet<NCM> NCMs { get; set; }
+    public virtual DbSet<RadAcct> RadAcct { get; set; }
+    public virtual DbSet<RadCheck> RadCheck { get; set; }
+    public virtual DbSet<RadGroupCheck> RadGroupCheck { get; set; }
+    public virtual DbSet<RadGroupReply> RadGroupReply { get; set; }
+    public virtual DbSet<RadpostAuth> RadPostAuth { get; set; }
+    public virtual DbSet<RadReply> RadReply { get; set; }
+    public virtual DbSet<RadUserGroup> RadUserGroup { get; set; }
+    public virtual DbSet<RadIpPool> RadIpPool { get; set; }
+    public virtual DbSet<RadNas> RadNas { get; set; }
+
+
     // NFeSource foi transformado em um Enum. Portanto, não é necessario sua presença no context.
     //public virtual DbSet<NFeSource> NFeSources {get; set;}
-    public virtual DbSet<PIS> PIS {get; set;}
-    public virtual DbSet<CEST> CESTs {get; set;}
+    public virtual DbSet<PIS> PIS { get; set; }
+    public virtual DbSet<CEST> CESTs { get; set; }
 
 
 
@@ -87,6 +100,7 @@ public partial class ControllRRContext : IdentityDbContext<ApplicationUser>
     {
         base.OnModelCreating(modelBuilder);
         OnModelCreatingPartial(modelBuilder);
+
         modelBuilder.Entity<ServerLogin>()
             .HasKey(sl => new { sl.ServerId, sl.LoginId }); // Chave primária composta
         modelBuilder.Entity<ServerLogin>()
@@ -193,6 +207,10 @@ public partial class ControllRRContext : IdentityDbContext<ApplicationUser>
             .Property(s => s.TaxRate)
             .HasDefaultValue(0m);
     }
+
+// Ajustar default values para evitar erro de 'Invalid default value'
+// Certificar que valores NULL e padrões estejam corretos
+// Não fazer alterações daqui para cima
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

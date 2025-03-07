@@ -66,7 +66,10 @@
             searchable: false,
             render: function(data, type, row) {
                 return `
-                    <a class="btn btn-sm btn-success" href="/Devices/GetMaintenances/${row.deviceId}"onclick="displayBusyIndicator()"><span class="fa fa-eye"></span> Ver</a></button>
+                   
+        <a class="btn btn-sm btn-success" href="/Maintenances/c/PT-BR/show/all/${row.deviceId}/auth_user/acceptable_request/user/" onclick="displayBusyIndicator()">
+            <span class="fa fa-eye"></span> Ver
+        </a>
                     <a class="btn btn-sm btn-warning" href="/Devices/Details/${row.id}"onclick="displayBusyIndicator()"><span class="fa fa-edit"></span> Editar</a></button>
                 `;
             }
