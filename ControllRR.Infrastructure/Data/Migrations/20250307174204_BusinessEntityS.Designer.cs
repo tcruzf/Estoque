@@ -3,6 +3,7 @@ using System;
 using ControllRR.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControllRR.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ControllRRContext))]
-    partial class ControllRRContextModelSnapshot : ModelSnapshot
+    [Migration("20250307174204_BusinessEntityS")]
+    partial class BusinessEntityS
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1594,6 +1597,76 @@ namespace ControllRR.Infrastructure.Data.Migrations
                     b.ToTable("RadNas");
                 });
 
+            modelBuilder.Entity("InformationProfiles", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly?>("Abreciclo")
+                        .HasColumnType("date");
+
+                    b.Property<string>("BasePlanoVelocidade")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("BusinessCompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly?>("Ciclo")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("DataVencimento")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("DataVencimento1")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("DataVencimento2")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("DataVencimento3")
+                        .HasColumnType("date");
+
+                    b.Property<string>("DescricaoPlano")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("FilialPlano")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NomePlano")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal?>("PadraoJuros")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal?>("PadraoMulta")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<string>("TipoConexao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("Ultimafatura")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Ultimocod")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ValorPlano")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessCompanyId");
+
+                    b.ToTable("InformationProfiles");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -1720,76 +1793,6 @@ namespace ControllRR.Infrastructure.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("Profiles", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly?>("Abreciclo")
-                        .HasColumnType("date");
-
-                    b.Property<string>("BasePlanoVelocidade")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("BusinessCompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly?>("Ciclo")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly?>("DataVencimento")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly?>("DataVencimento1")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly?>("DataVencimento2")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly?>("DataVencimento3")
-                        .HasColumnType("date");
-
-                    b.Property<string>("DescricaoPlano")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("FilialPlano")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("NomePlano")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<decimal?>("PadraoJuros")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<decimal?>("PadraoMulta")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<string>("TipoConexao")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int?>("Ultimafatura")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Ultimocod")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ValorPlano")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BusinessCompanyId");
-
-                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("ControllRR.Domain.Entities.BrazilianTaxs.IpiEnquadramento", b =>
@@ -1989,6 +1992,13 @@ namespace ControllRR.Infrastructure.Data.Migrations
                     b.Navigation("Stock");
                 });
 
+            modelBuilder.Entity("InformationProfiles", b =>
+                {
+                    b.HasOne("BusinessCompany", null)
+                        .WithMany("InformationProfiles")
+                        .HasForeignKey("BusinessCompanyId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -2038,17 +2048,6 @@ namespace ControllRR.Infrastructure.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Profiles", b =>
-                {
-                    b.HasOne("BusinessCompany", "BusinessCompany")
-                        .WithMany("InformationProfiles")
-                        .HasForeignKey("BusinessCompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BusinessCompany");
                 });
 
             modelBuilder.Entity("BusinessCompany", b =>

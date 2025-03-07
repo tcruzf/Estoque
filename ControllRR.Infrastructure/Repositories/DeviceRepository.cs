@@ -41,7 +41,7 @@ public class DeviceRepository : BaseRepository<Device>, IDeviceRepository
         return await _context.Devices
         .Include(x => x.Sector)
         .FirstOrDefaultAsync(x => x.Id == id);
-    }
+    } 
 
     // Busca informações sobre um determinado dispositivo com base no seu Id.
     // Inclue na busca todas as manutenções relacionadas a ele e também seu setor

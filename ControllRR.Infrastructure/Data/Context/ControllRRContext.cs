@@ -74,6 +74,7 @@ public partial class ControllRRContext : IdentityDbContext<ApplicationUser>
     public virtual DbSet<RadUserGroup> RadUserGroup { get; set; }
     public virtual DbSet<RadIpPool> RadIpPool { get; set; }
     public virtual DbSet<RadNas> RadNas { get; set; }
+    public virtual DbSet<BusinessCompany> BusinessCompanies { get; set; }
 
 
     // NFeSource foi transformado em um Enum. Portanto, não é necessario sua presença no context.

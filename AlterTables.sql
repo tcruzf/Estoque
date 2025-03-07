@@ -6,8 +6,8 @@ SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 
-DROP TABLE IF EXISTS `radnas`;
-CREATE TABLE `radnas` (
+DROP TABLE IF EXISTS `RadNas`;
+CREATE TABLE `RadNas` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `nasname` varchar(128) NOT NULL,
   `shortname` varchar(32) DEFAULT NULL,
@@ -21,8 +21,8 @@ CREATE TABLE `radnas` (
   KEY `nasname` (`nasname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
-DROP TABLE IF EXISTS `radacct`;
-CREATE TABLE `radacct` (
+DROP TABLE IF EXISTS `RadAcct`;
+CREATE TABLE `RadAcct` (
   `radacctid` bigint(21) NOT NULL AUTO_INCREMENT,
   `acctsessionid` varchar(250) NOT NULL DEFAULT '',
   `acctuniqueid` varchar(250) NOT NULL DEFAULT '',
@@ -60,8 +60,8 @@ CREATE TABLE `radacct` (
   KEY `nasipaddress` (`nasipaddress`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
-DROP TABLE IF EXISTS `radcheck`;
-CREATE TABLE `radcheck` (
+DROP TABLE IF EXISTS `RadCheck`;
+CREATE TABLE `RadCheck` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL DEFAULT '',
   `attribute` varchar(64) NOT NULL DEFAULT '',
@@ -71,8 +71,8 @@ CREATE TABLE `radcheck` (
   KEY `username` (`username`(32))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
-DROP TABLE IF EXISTS `radgroupcheck`;
-CREATE TABLE `radgroupcheck` (
+DROP TABLE IF EXISTS `RadGroupCheck`;
+CREATE TABLE `RadGroupCheck` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `groupname` varchar(64) NOT NULL DEFAULT '',
   `attribute` varchar(64) NOT NULL DEFAULT '',
@@ -82,8 +82,8 @@ CREATE TABLE `radgroupcheck` (
   KEY `groupname` (`groupname`(32))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
-DROP TABLE IF EXISTS `radgroupreply`;
-CREATE TABLE `radgroupreply` (
+DROP TABLE IF EXISTS `RadGroupReply`;
+CREATE TABLE `RadGroupReply` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `groupname` varchar(64) NOT NULL DEFAULT '',
   `attribute` varchar(64) NOT NULL DEFAULT '',
@@ -93,8 +93,8 @@ CREATE TABLE `radgroupreply` (
   KEY `groupname` (`groupname`(32))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
-DROP TABLE IF EXISTS `radippool`;
-CREATE TABLE `radippool` (
+DROP TABLE IF EXISTS `RadIpPool`;
+CREATE TABLE `RadIpPool` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `pool_name` varchar(30) NOT NULL,
   `framedipaddress` varchar(15) NOT NULL DEFAULT '',
@@ -111,8 +111,8 @@ CREATE TABLE `radippool` (
   KEY `radippool_nasip_poolkey_ipaddress` (`nasipaddress`,`pool_key`,`framedipaddress`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
-DROP TABLE IF EXISTS `radpostauth`;
-CREATE TABLE `radpostauth` (
+DROP TABLE IF EXISTS `RadPostAuth`;
+CREATE TABLE `RadPostAuth` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL DEFAULT '',
   `pass` varchar(64) NOT NULL DEFAULT '',
@@ -121,8 +121,8 @@ CREATE TABLE `radpostauth` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
-DROP TABLE IF EXISTS `radreply`;
-CREATE TABLE `radreply` (
+DROP TABLE IF EXISTS `RadReply`;
+CREATE TABLE `RadReply` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL DEFAULT '',
   `attribute` varchar(64) NOT NULL DEFAULT '',
@@ -132,8 +132,8 @@ CREATE TABLE `radreply` (
   KEY `username` (`username`(32))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
-DROP TABLE IF EXISTS `radusergroup`;
-CREATE TABLE `radusergroup` (
+DROP TABLE IF EXISTS `RadUserGroup`;
+CREATE TABLE `RadUserGroup` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL DEFAULT '',
   `groupname` varchar(64) NOT NULL DEFAULT '',

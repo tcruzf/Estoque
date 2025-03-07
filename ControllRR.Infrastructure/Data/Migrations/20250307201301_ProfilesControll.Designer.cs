@@ -3,6 +3,7 @@ using System;
 using ControllRR.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControllRR.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ControllRRContext))]
-    partial class ControllRRContextModelSnapshot : ModelSnapshot
+    [Migration("20250307201301_ProfilesControll")]
+    partial class ProfilesControll
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1735,7 +1738,7 @@ namespace ControllRR.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("BusinessCompanyId")
+                    b.Property<int?>("BusinessCompanyId")
                         .HasColumnType("int");
 
                     b.Property<DateOnly?>("Ciclo")
@@ -2042,13 +2045,9 @@ namespace ControllRR.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Profiles", b =>
                 {
-                    b.HasOne("BusinessCompany", "BusinessCompany")
+                    b.HasOne("BusinessCompany", null)
                         .WithMany("InformationProfiles")
-                        .HasForeignKey("BusinessCompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BusinessCompany");
+                        .HasForeignKey("BusinessCompanyId");
                 });
 
             modelBuilder.Entity("BusinessCompany", b =>
