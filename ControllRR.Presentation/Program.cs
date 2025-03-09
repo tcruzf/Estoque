@@ -87,7 +87,9 @@ builder.Services.AddAutoMapper(
     typeof(SupplierMappingProfile),
     typeof(PurchaseOrderMappingProfile),
     typeof(CustomerMappingProfile),
-    typeof(ContactInfoMapping)
+    typeof(ContactInfoMapping),
+    typeof(BusinessCompanyMapping)
+    
     //typeof()
 );
  
@@ -124,6 +126,8 @@ builder.Services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
 builder.Services.AddScoped<IPurchaseItemService, PurchaseItemService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CusomerService>();
+builder.Services.AddScoped<IBusinessCompanyRepository, BusinessCompanyRepository>();
+builder.Services.AddScoped<IBusinessCompanyService, BusinessCompanyService>();
 // Adicionar suporte ao MVC e Razor Pages
 builder.Services.AddControllersWithViews();
 

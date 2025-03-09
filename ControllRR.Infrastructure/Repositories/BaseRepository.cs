@@ -31,6 +31,7 @@ namespace ControllRR.Infrastructure.Repositories
             _context.Set<T>().Remove(entity);
             await Task.CompletedTask;
         }
+        // 
         // (Nova nota )Para referencia - > Por hora estou usando em stockService(search) e em purchaseOrderService(Search) para retornar valores
         // sem a necessidade de repetição em cada repository. Pretendo a medida de que for necessario tais repetições, incluir novos metodos aqui e simplificar
         // os demais repo.(fim nova nota)
