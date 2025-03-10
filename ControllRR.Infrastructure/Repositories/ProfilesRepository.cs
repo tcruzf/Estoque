@@ -1,5 +1,7 @@
 using ControllRR.Domain.Interfaces;
 using ControllRR.Infrastructure.Data.Context;
+using ControllRR.Infrastructure.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace ControllRR.Infrastructure.Repositories;
 
@@ -9,12 +11,14 @@ public class ProfilesRepository : BaseRepository<Profiles>, IProfilesRepository
     //private readonly IUnitOfWork _uow;
     public ProfilesRepository(ControllRRContext context) : base(context)
     {
-        
+
     }
 
-    public Task<Profiles> AddProfile(Profiles profile)
+    public async Task AddProfile(Profiles profile)
     {
-        throw new NotImplementedException();
+
+        await _context.Profiles.AddAsync(profile);
+
     }
 
     public Task<Profiles> DeleteProfile(int id)
@@ -22,14 +26,18 @@ public class ProfilesRepository : BaseRepository<Profiles>, IProfilesRepository
         throw new NotImplementedException();
     }
 
-    public Task<Profiles> GetProfile(int id)
+    public async Task<Profiles?> GetProfile(int id)
     {
-        throw new NotImplementedException();
+        return await  _context.Profiles
+                        .Include(m => m.BusinessCompany)
+                        .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public Task<IEnumerable<Profiles>> GetProfiles()
+    public async Task<List<Profiles>> GetAllProfilesAsync()
     {
-        throw new NotImplementedException();
+       return await _context.Profiles
+                    .Include(v => v.BusinessCompany)
+                    .ToListAsync();
     }
 
     public Task<Profiles> UpdateProfile(Profiles profile)

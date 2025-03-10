@@ -36,5 +36,5 @@ public class ProfilesDto
 
     public decimal? PadraoMulta { get; set; }
     public int BusinessCompanyId { get; set; }
-    public BusinessCompany BusinessCompany { get; set; } = null!;
+    public BusinessCompanyDto BusinessCompanyDto { get; set; } = null!;
 }

@@ -21,7 +21,7 @@ public class BusinessCompanyRepository : BaseRepository<BusinessCompany>, IBusin
     public async Task<BusinessCompany?> GetBusinessCompanyAsync(int id)
     {
         return await _context.BusinessCompanies
-        .Include(j => j.InformationProfiles)
+        .Include(j => j.Profiles)
         .FirstOrDefaultAsync(x => x.Id == id);
     }
 }

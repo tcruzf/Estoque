@@ -17,13 +17,13 @@ public class BusinessCompanyService : IBusinessCompanyService
         _mapper = mapper;
     }
 
-    public async Task<List<BusinessCompanyDto>> GetBusinessCompanyAsync(int id)
-    {
+    public async Task<BusinessCompanyDto> GetBusinessCompanyAsync(int id)
+    {//
 
         await _uow.BeginTransactionAsync();
         var businessRepo = _uow.GetRepository<IBusinessCompanyRepository>();
         var result = await businessRepo.GetBusinessCompanyAsync(id);
-        return _mapper.Map<List<BusinessCompanyDto>>(result);
+        return _mapper.Map<BusinessCompanyDto>(result);
     }
 
     /// <summary>

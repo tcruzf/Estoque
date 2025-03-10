@@ -1,3 +1,4 @@
+using ControllRR.Application.Interfaces;
 using ControllRR.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,10 +7,12 @@ namespace ControllRR.Presentation.Controllers;
 public class BusinessCompanyController : Controller
 {
     private readonly IBusinessCompanyService _businessCompanyService;
+    private readonly IProfilesService _profilesService;
 
-    public BusinessCompanyController(IBusinessCompanyService businessCompanyService)
+    public BusinessCompanyController(IBusinessCompanyService businessCompanyService, IProfilesService profilesService)
     {
         _businessCompanyService = businessCompanyService;
+        _profilesService = profilesService;
     }
 
     [HttpGet("Company/Index")]
@@ -22,15 +25,18 @@ public class BusinessCompanyController : Controller
     [HttpGet("Company/{id}/Details")]
     public async Task<IActionResult> Details(int id)
     {
+         
         try
         {
-            var obj = await _businessCompanyService.GetBusinessCompanyAsync(id);
-            return Json(obj);
+            
+            var company = await _businessCompanyService.GetBusinessCompanyAsync(id);
+            return View("Views/BusinessCompany/Company.cshtml", company);
+            
         }
         catch (InvalidOperationException ex)
         {
-            throw new InvalidOperationException(ex.Message);
-        }
+           return Json(ex.Message);
+        }//
 
 
     }

@@ -59,6 +59,6 @@ public class BusinessCompanyDto
     [Required, StringLength(500)]
     public string? IdentificacaoNegocio { get; set; }
 
-    public ICollection<ProfilesDto?> InformationProfiles { get; set; }
+    public ICollection<ProfilesDto?> ProfilesDtos { get; set; }
 
 }

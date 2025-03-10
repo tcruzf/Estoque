@@ -60,12 +60,12 @@ public class BusinessCompany
     [Required, StringLength(500)]
     public string? IdentificacaoNegocio { get; set; }
 
-    public ICollection<Profiles?> InformationProfiles { get; set; }
+    public ICollection<Profiles?> Profiles { get; set; }
 
     // Construtor sem parametros(ORM)
     public BusinessCompany()
     {
-        InformationProfiles = new List<Profiles?>();
+        Profiles = new List<Profiles?>();
 
     }
 
@@ -92,7 +92,7 @@ public class BusinessCompany
         CidadeCad = cidadeCad;
         UfCad = ufCad;
         IdentificacaoNegocio = identificacaoNegocio;
-        InformationProfiles = new List<Profiles?>();
+        Profiles = new List<Profiles?>();
 
     }
 }
