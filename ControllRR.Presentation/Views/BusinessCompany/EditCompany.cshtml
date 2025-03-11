@@ -1,0 +1,5 @@
+@model IEnumerable<ControllRR.Application.Dto.BusinessCompanyDto>
+@{
+    ViewData["Title"] = "Lista de Operações";
+}
+  @await Html.PartialAsync("Partials/_EditCompanyForm", Model)

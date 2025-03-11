@@ -54,5 +54,20 @@ public class BusinessCompanyService : IBusinessCompanyService
         throw new NotImplementedException();
     }
 
+    public async Task<List<BusinessCompanyDto>> GetAllCompanyData()
+    {
+        try
+        {
+            await _uow.BeginTransactionAsync();
+            var businessRepo = _uow.GetRepository<IBusinessCompanyRepository>();
+            var item = await businessRepo.FindAllBusinessCompaniesAsync();
+            return _mapper.Map<List<BusinessCompanyDto>>(item);
+        }
+        catch(Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
+
 
 }

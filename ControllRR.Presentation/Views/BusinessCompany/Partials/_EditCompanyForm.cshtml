@@ -1,0 +1,99 @@
+@model ControllRR.Application.Dto.BusinessCompanyDto;
+
+<form asp-controller="BusinessCompany" asp-action="UpdateCompany" method="post">
+    <div class="row">
+     <div class="form-group col-md-2">
+    <label asp-for="RazaoSocial"></label>
+    <input asp-for="RazaoSocial" class="form-control input-sm"  />
+    <span asp-validation-for="RazaoSocial" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-3">
+    <label asp-for="NomeFantasia"></label>
+    <input asp-for="NomeFantasia" class="form-control input-sm"  />
+    <span asp-validation-for="NomeFantasia" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-4">
+    <label asp-for="CnpjEmpresa"></label>
+    <input asp-for="CnpjEmpresa" class="form-control input-sm"  />
+    <span asp-validation-for="CnpjEmpresa" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-3">
+    <label asp-for="DataCadastro"></label>
+    <input asp-for="DataCadastro" class="form-control input-sm"  />
+    <span asp-validation-for="DataCadastro" type="date" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-3">
+    <label asp-for="IscEstadual"></label>
+    <input asp-for="IscEstadual" class="form-control input-sm"  />
+    <span asp-validation-for="IscEstadual" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-4">
+    <label asp-for="CnaeComplementar"></label>
+    <input asp-for="CnaeComplementar" class="form-control input-sm"  />
+    <span asp-validation-for="CnaeComplementar" class="text-danger"></span>
+    </div> 
+    <div class="col">
+    <label asp-for="CnaeFiscal"></label>
+    <input asp-for="CnaeFiscal" class="form-control input-sm"  />
+    <span asp-validation-for="CnaeFiscal" class="text-danger"></span>
+    </div> 
+     <div class="form-group col-md-3">
+    <label asp-for="RegimeTributario"></label>
+    <input asp-for="RegimeTributario" class="form-control input-sm"  />
+    <span asp-validation-for="RegimeTributario" class="text-danger"></span>
+    </div> 
+     <div class="form-group col-md-2">
+    <label asp-for="AtoAnatel"></label>
+    <input asp-for="AtoAnatel" class="form-control input-sm"  />
+    <span asp-validation-for="AtoAnatel" class="text-danger"></span>
+    </div> 
+     <div class="form-group col-md-3">
+    <label asp-for="FoneCad"></label>
+    <input asp-for="FoneCad" class="form-control input-sm" />
+    <span asp-validation-for="FoneCad" class="text-danger"></span>
+    </div> 
+     <div class="form-group col-md-2">
+    <label asp-for="CepCad"></label>
+    <input asp-for="CepCad" class="form-control input-sm" />
+    <span asp-validation-for="CepCad" class="text-danger"></span>
+    </div> 
+     <div class="form-group col-md-4">
+    <label asp-for="RuaCad"></label>
+    <input asp-for="RuaCad" class="form-control input-sm"  />
+    <span asp-validation-for="RuaCad" class="text-danger"></span>
+    </div> 
+    <div class="col">
+    <label asp-for="NumResidenciaCad"></label>
+    <input asp-for="NumResidenciaCad" class="form-control input-sm" />
+    <span asp-validation-for="NumResidenciaCad" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-3">
+    <label asp-for="BairroCad"></label>
+    <input asp-for="BairroCad" class="form-control input-sm" />
+    <span asp-validation-for="BairroCad" class="text-danger"></span>
+    </div> 
+    <div class="col">
+    <label asp-for="ComplementoCad"></label>
+    <input asp-for="ComplementoCad" class="form-control input-sm" />
+    <span asp-validation-for="ComplementoCad" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-2">
+    <label asp-for="CidadeCad"></label>
+    <input asp-for="CidadeCad" class="form-control input-sm" />
+    <span asp-validation-for="CidadeCad" class="text-danger"></span>
+    </div> 
+    <div class="col">
+    <label asp-for="UfCad"></label>
+    <input asp-for="UfCad" class="form-control input-sm"  />
+    <span asp-validation-for="UfCad" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-4">
+    <label asp-for="IdentificacaoNegocio"></label>
+    <input asp-for="IdentificacaoNegocio" class="form-control input-sm" />
+    <span asp-validation-for="IdentificacaoNegocio" class="text-danger"></span>
+    </div> 
+    </div>
+    <div class="mt-4">
+     <a asp-action="SectorEdit" class="btn btn-warning" asp-route-id="@Model.Id" onclick="displayBusyIndicator()">Editar</a>
+    </div>
+</form>

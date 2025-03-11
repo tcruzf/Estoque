@@ -13,9 +13,9 @@ public class BusinessCompanyRepository : BaseRepository<BusinessCompany>, IBusin
 
     }
 
-    public Task<IEnumerable<BusinessCompany>> FindAllBusinessCompaniesAsync()
+    public async Task<List<BusinessCompany>> FindAllBusinessCompaniesAsync()
     {
-        throw new NotImplementedException();
+       return await _context.BusinessCompanies.ToListAsync();
     }
 
     public async Task<BusinessCompany?> GetBusinessCompanyAsync(int id)

@@ -1,5 +1,5 @@
 
-public class Profiles
+public class Profiles 
 {
     public int Id { get; set; }
 

@@ -9,5 +9,8 @@ public interface IBusinessCompanyService
     Task<BusinessCompanyDto> GetBusinessCompanyAsync(int id);
     Task<OperationResultDto> AddBusinessCompanyAsync(BusinessCompanyDto companyDto);
     Task<OperationResultDto> UpdateBusinessCompanyAsync(BusinessCompanyDto companyDto);
+    Task<List<BusinessCompanyDto>> GetAllCompanyData();
+
+
    
 }
