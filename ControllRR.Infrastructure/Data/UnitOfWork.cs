@@ -67,6 +67,14 @@ public class UnitOfWork : IUnitOfWork
             System.Console.WriteLine("Fazendo Rollback da parada toda");
             await _transaction.RollbackAsync();
             System.Console.WriteLine("Fazendo Rollback -> Terminou");
+             System.Console.WriteLine("##################################################");
+              System.Console.WriteLine("##################################################");
+               System.Console.WriteLine("##################################################");
+                System.Console.WriteLine("##################################################");
+                 System.Console.WriteLine("##################################################");
+                  System.Console.WriteLine("##################################################");
+                   System.Console.WriteLine("##################################################");
+                    System.Console.WriteLine("##################################################");
             _transaction = null;
         }
     }

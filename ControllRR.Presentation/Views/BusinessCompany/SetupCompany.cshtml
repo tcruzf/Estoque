@@ -1,16 +1,16 @@
 @model ControllRR.Application.Dto.BusinessCompanyDto;
  @{
-    ViewData["Title"] = "Registrar novo Setor";
+    ViewData["Title"] = "Consulta de Empresa";
 }
 <div class="container-fluid px-4">
     <h1 class="mt-4"></h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="/Devices">Setores</a></li>
-          <li class="breadcrumb-item active">Adicionar</li>
+        <li class="breadcrumb-item"><a href="/Devices">Empresas</a></li>
+          <li class="breadcrumb-item active">Registros</li>
     </ol>
 </div>
-
+ @await Html.PartialAsync("Partials/_LoadingPartial")
 <div class="row">
 <div class="col-md-12">
 <br>
@@ -21,7 +21,7 @@
 <div class="card-header text-center bg-dark text-white">
 <div class="row align-items-center">
 <div class="col-md-12">
-<h5>::Configurar Empresa::</h5>
+<h5>::Informações Empresa::</h5>
 </div>
 </div>
 </div>
@@ -42,7 +42,8 @@
 </div>
 <div class="card-body">
 <div class="row">
-  @await Html.PartialAsync("Partials/_EditCompanyForm", Model)
+
+  @await Html.PartialAsync("Partials/_ShowCompanyForm", Model)
 </div>
 </div>
 @section Scripts {

@@ -1,6 +1,7 @@
 @model ControllRR.Application.Dto.BusinessCompanyDto;
 
 <form asp-controller="BusinessCompany" asp-action="UpdateCompany" method="post">
+    <input type="hidden" asp-for="Id" />
     <div class="row">
      <div class="form-group col-md-2">
     <label asp-for="RazaoSocial"></label>
@@ -94,6 +95,6 @@
     </div> 
     </div>
     <div class="mt-4">
-     <a asp-action="SectorEdit" class="btn btn-warning" asp-route-id="@Model.Id" onclick="displayBusyIndicator()">Editar</a>
+     <button type="submit" onclick="displayBusyIndicator()" class="btn btn-success">Salvar</button>
     </div>
 </form>

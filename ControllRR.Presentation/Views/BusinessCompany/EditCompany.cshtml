@@ -1,5 +1,55 @@
-@model IEnumerable<ControllRR.Application.Dto.BusinessCompanyDto>
+@model ControllRR.Application.Dto.BusinessCompanyDto
 @{
-    ViewData["Title"] = "Lista de Operações";
+    ViewData["Title"] = "Edição de Empresas";
 }
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4"></h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/Devices">Empresa</a></li>
+          <li class="breadcrumb-item active">Consulta</li>
+    </ol>
+</div>
+@if (TempData["CompanyAlertMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["CompanyAlertMessage"]
+    </div>
+}
+@if (TempData["CompanyErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["CompanyErrorMessage"]
+    </div>
+}
+<div class="row">
+<div class="col-md-12">
+<br>
+<div class="container">
+<div class="row">
+<div class="col-12">
+<div class="card">
+<div class="card-header text-center bg-dark text-white">
+<div class="row align-items-center">
+<div class="col-md-12">
+   @await Html.PartialAsync("Partials/_LoadingPartial")
+<h5>::Detalhes da Empresa a ser editada::</h5>
+</div>
+</div>
+</div>
+
+<div class="card mt-12">
+<div class="card-header">Data::
+</div>
+<div class="card-body">
+<div class="row">
+ 
   @await Html.PartialAsync("Partials/_EditCompanyForm", Model)
+  </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+       <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+</script>
+}

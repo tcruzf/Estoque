@@ -5,5 +5,6 @@ public interface IBusinessCompanyRepository : IRepository<BusinessCompany>
 {
     Task<List<BusinessCompany>> FindAllBusinessCompaniesAsync();
     Task<BusinessCompany?> GetBusinessCompanyAsync(int id);
-   
+    Task UpdateCompany(BusinessCompany businessCompany);
+    
 }

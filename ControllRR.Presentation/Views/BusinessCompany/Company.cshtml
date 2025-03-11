@@ -1,16 +1,33 @@
-@model ControllRR.Application.Dto.BusinessCompanyDto;
+@model IEnumerable<ControllRR.Application.Dto.BusinessCompanyDto>
  @{
-    ViewData["Title"] = "Registrar novo Setor";
+    ViewData["Title"] = "Registro de Empresas";
 }
+
+
 <div class="container-fluid px-4">
     <h1 class="mt-4"></h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="/Devices">Setores</a></li>
-          <li class="breadcrumb-item active">Adicionar</li>
+        <li class="breadcrumb-item"><a href="/Devices">Empresa</a></li>
+          <li class="breadcrumb-item active">Consulta</li>
     </ol>
 </div>
-
+@if (TempData["ListCompanySucessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["ListCompanySucessMessage"]
+    </div>
+}
+@if (TempData["ListCompanyErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ListCompanyErrorMessage"]
+    </div>
+}
+ <div class="mt-4">
+         <a asp-action="New" class="btn btn-primary">Adicionar Empresa</a>
+       
+    </div>
 <div class="row">
 <div class="col-md-12">
 <br>
@@ -25,24 +42,14 @@
 </div>
 </div>
 </div>
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
-    </div>
-}
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["ErrorMessage"]
-    </div>
-}
+
 <div class="card mt-12">
 <div class="card-header">Data::
 </div>
 <div class="card-body">
 <div class="row">
-  @await Html.PartialAsync("Partials/_ShowCompanyForm", Model)
+  @await Html.PartialAsync("Partials/_LoadingPartial")
+  @await Html.PartialAsync("Partials/_ListCompanyForm", Model)
 </div>
 </div>
 @section Scripts {

@@ -2,17 +2,25 @@
 @{
     ViewData["Title"] = "Lista de Operações";
 }
-
+@if (TempData["ListCompanySuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["ListCompanySuccessMessage"]
+    </div>
+}
+@if (TempData["ListCompanyErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ListCompanyErrorMessage"]
+    </div>
+}
 <!-- <h2>Clientes</h2> -->
 
-    <div class="mt-4">
-         <a asp-action="New" class="btn btn-primary">Nova Entrada</a>
-       
-    </div>
+   
 
      <div class="card mt-4">
         <div class="card-header">
-         Lista de Operações
+         Ações
      </div>
 
            <div class="card-body">

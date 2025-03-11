@@ -49,22 +49,61 @@ public class BusinessCompanyService : IBusinessCompanyService
 
     }
 
-    public Task<OperationResultDto> UpdateBusinessCompanyAsync(BusinessCompanyDto companyDto)
+    /// <summary>
+    /// Realiza a atualização da empresa conforme dados passados para o metodo
+    /// </summary>
+    /// <param name="companyDto"></param>
+    /// <returns>OperationResultDto(false ou true)</returns>
+    public async Task<OperationResultDto> UpdateBusinessCompanyAsync(BusinessCompanyDto companyDto)
     {
-        throw new NotImplementedException();
+
+        try
+        {
+            // Inicia a transação
+            await _uow.BeginTransactionAsync();
+            // realiza mapeamento de BusinessCompany para BusinessCompany
+            var company = _mapper.Map<BusinessCompany>(companyDto);
+            // Obtem o repositorio associado a classe()
+            var companyRepo = _uow.GetRepository<IBusinessCompanyRepository>();
+            // realiza o update usando o repositorio e o metodo do BaseRepository(Genérico)
+            await companyRepo.UpdateAsync(company);
+            // Caso não aconteceça falha, salva a transação
+            await _uow.SaveChangesAsync();
+            // O commit finaliza a transaçao fconfirmando todo o processo
+            await _uow.CommitAsync();
+            // retorna uma operationResultDto com 'sucess=true'
+            return new OperationResultDto { Success = true };
+        }
+        catch (Exception ex)
+        { 
+            // caso não seja possivel realizar a transação com update, então é feito todo processo de rollback
+            //await _uow.RollbackAsync();
+            // retorna uma operationResultDto com 'sucess=false' e 'Message'= exceção capturada.
+            throw new Exception(ex.Message);
+
+        }
     }
 
+    /// <summary>
+    /// Realiza a busca por diversas empresas registradas na base de dados
+    /// </summary>
+    /// <returns>Lista de Empresas caso ok e uma exception se não for possivel determinar a recuperação de dados</returns>
+    /// <exception cref="Exception"></exception>
     public async Task<List<BusinessCompanyDto>> GetAllCompanyData()
     {
         try
-        {
+        {   // inicia a transação
             await _uow.BeginTransactionAsync();
+            // atribui a variavel(esquerda) o repositorio obtido através do UnitOfWork
             var businessRepo = _uow.GetRepository<IBusinessCompanyRepository>();
+            // faz a busca pelas empresas registradas(em caso de ter mais de uma)
             var item = await businessRepo.FindAllBusinessCompaniesAsync();
+            // retorna uma lista de empresas caso exista mais de uma.
             return _mapper.Map<List<BusinessCompanyDto>>(item);
         }
-        catch(Exception ex)
+        catch (Exception ex)// captura uma provavel exception no caso de algum problema durante a busca
         {
+            // caso não seja possivel recuperar e retornar as empresas, então retorna uma mensagem contendo o erro(Vou fixar isso também)
             throw new Exception(ex.Message);
         }
     }

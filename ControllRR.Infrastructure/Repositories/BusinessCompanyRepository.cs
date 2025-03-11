@@ -1,5 +1,6 @@
 using ControllRR.Domain.Interfaces;
 using ControllRR.Infrastructure.Data.Context;
+using ControllRR.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +16,7 @@ public class BusinessCompanyRepository : BaseRepository<BusinessCompany>, IBusin
 
     public async Task<List<BusinessCompany>> FindAllBusinessCompaniesAsync()
     {
-       return await _context.BusinessCompanies.ToListAsync();
+        return await _context.BusinessCompanies.ToListAsync();
     }
 
     public async Task<BusinessCompany?> GetBusinessCompanyAsync(int id)
@@ -23,5 +24,23 @@ public class BusinessCompanyRepository : BaseRepository<BusinessCompany>, IBusin
         return await _context.BusinessCompanies
         .Include(j => j.Profiles)
         .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task UpdateCompany(BusinessCompany businessCompany)
+    {
+       
+        try
+        {
+            System.Console.WriteLine("##################################################");
+            _context.Entry(businessCompany).CurrentValues.SetValues(businessCompany);
+            System.Console.WriteLine("UPDATE Repository");
+            System.Console.WriteLine("##################################################");
+
+        }
+        catch (DbConcurrencyException e)
+        {
+            throw new DbConcurrencyException(e.Message);
+        }
+
     }
 }
