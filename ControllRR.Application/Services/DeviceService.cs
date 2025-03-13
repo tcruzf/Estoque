@@ -32,15 +32,18 @@ public class DeviceService : IDeviceService
 
     public async Task<DeviceDto> GetMaintenancesAsync(int id)
     {
-        var device = await _deviceRepository.GetMaintenancesAsync(id);
+        
+        var deviceRepo = _uow.GetRepository<IDeviceRepository>();
+        var device = await deviceRepo.GetMaintenancesAsync(id);
         return _mapper.Map<DeviceDto>(device);
     }
 
     public async Task InsertAsync(DeviceDto deviceDto)
     {
         await _uow.BeginTransactionAsync();
+        var deviceRepo = _uow.GetRepository<IDeviceRepository>();
         var device = _mapper.Map<Device>(deviceDto);
-        await _deviceRepository.InsertAsync(device);
+        await deviceRepo.InsertAsync(device);
         await _uow.SaveChangesAsync();
         await _uow.CommitAsync();
 
@@ -50,7 +53,8 @@ public class DeviceService : IDeviceService
     {
         await _uow.BeginTransactionAsync();
         var device = _mapper.Map<Device>(deviceDto);
-        await _deviceRepository.UpdateAsync(device);
+        var deviceRepo = _uow.GetRepository<IDeviceRepository>();
+        await deviceRepo.UpdateAsync(device);
         await _uow.SaveChangesAsync();
         await _uow.CommitAsync();
     }

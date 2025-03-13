@@ -1,6 +1,6 @@
 namespace ControllRR.Application.Dto;
 
-public class ProfilesDto
+public class SysProfilesDto
 {
     public int Id { get; set; }
 

@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ControllRR.Domain.Entities.Radius;
 
 public class BusinessCompany
 {
@@ -60,12 +61,12 @@ public class BusinessCompany
     [Required, StringLength(500)]
     public string? IdentificacaoNegocio { get; set; }
 
-    public ICollection<Profiles?> Profiles { get; set; }
+    public ICollection<SysProfiles?> Profiles { get; set; }
 
     // Construtor sem parametros(ORM)
     public BusinessCompany()
     {
-        Profiles = new List<Profiles?>();
+        Profiles = new List<SysProfiles?>();
 
     }
 
@@ -92,7 +93,7 @@ public class BusinessCompany
         CidadeCad = cidadeCad;
         UfCad = ufCad;
         IdentificacaoNegocio = identificacaoNegocio;
-        Profiles = new List<Profiles?>();
+        Profiles = new List<SysProfiles?>();
 
     }
 }

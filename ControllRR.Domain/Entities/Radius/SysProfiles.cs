@@ -1,5 +1,6 @@
+namespace ControllRR.Domain.Entities.Radius;
 
-public class Profiles 
+public class SysProfiles 
 {
     public int Id { get; set; }
 
@@ -37,11 +38,11 @@ public class Profiles
     public int BusinessCompanyId { get; set; }
     public BusinessCompany BusinessCompany { get; set; } = null!;
 
-    public Profiles()
+    public SysProfiles()
     {
 
     }
-    public Profiles(int id, string nomePlano, string valorPlano, string descricaoPlano, string basePlanoVelocidade, string filialPlano, string tipoConexao, DateOnly? ciclo, DateOnly? abreciclo, DateOnly? dataVencimento, DateOnly? dataVencimento1, DateOnly? dataVencimento2, DateOnly? dataVencimento3, int? ultimafatura, int? ultimocod, decimal? padraoJuros, decimal? padraoMulta, BusinessCompany businessCompany)
+    public SysProfiles(int id, string nomePlano, string valorPlano, string descricaoPlano, string basePlanoVelocidade, string filialPlano, string tipoConexao, DateOnly? ciclo, DateOnly? abreciclo, DateOnly? dataVencimento, DateOnly? dataVencimento1, DateOnly? dataVencimento2, DateOnly? dataVencimento3, int? ultimafatura, int? ultimocod, decimal? padraoJuros, decimal? padraoMulta, BusinessCompany businessCompany)
     {
         Id = id;
         NomePlano = nomePlano;

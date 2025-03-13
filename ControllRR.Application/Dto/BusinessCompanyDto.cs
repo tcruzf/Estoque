@@ -78,6 +78,6 @@ public class BusinessCompanyDto
     [Display(Name = "Ramo Negócio")]
     public string? IdentificacaoNegocio { get; set; }
 
-    public ICollection<ProfilesDto?> ProfilesDtos { get; set; }
+    public ICollection<SysProfilesDto?> SysProfilesDto { get; set; }
 
 }

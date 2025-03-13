@@ -1,12 +1,12 @@
 using AutoMapper;
 using ControllRR.Application.Dto;
-using ControllRR.Domain.Entities;
+using ControllRR.Domain.Entities.Radius;
 
 
-public class ProfilesMapping : Profile
+public class SysProfilesMapping : Profile
 {
-    public ProfilesMapping()
+    public SysProfilesMapping()
     {
-        CreateMap<Profiles, ProfilesDto>().ReverseMap();
+        CreateMap<SysProfiles, SysProfilesDto>().ReverseMap();
     }
 }

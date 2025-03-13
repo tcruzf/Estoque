@@ -19,9 +19,9 @@ namespace ControllRR.Presentation.Controllers;
 public class BusinessCompanyController : Controller
 {
     private readonly IBusinessCompanyService _businessCompanyService;
-    private readonly IProfilesService _profilesService;
+    private readonly ISysProfilesService _profilesService;
 
-    public BusinessCompanyController(IBusinessCompanyService businessCompanyService, IProfilesService profilesService)
+    public BusinessCompanyController(IBusinessCompanyService businessCompanyService, ISysProfilesService profilesService)
     {
         _businessCompanyService = businessCompanyService;
         _profilesService = profilesService;
