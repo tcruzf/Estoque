@@ -16,23 +16,34 @@ public class SysProfilesRepository : BaseRepository<SysProfiles>, ISysProfilesRe
     }
 
 
-    public Task<SysProfiles> DeleteProfile(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<SysProfiles?> GetProfile(int? id)
     {
-        return await  _context.SysProfiles
+        return await _context.SysProfiles
                         .Include(m => m.BusinessCompany)
                         .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<List<SysProfiles>> GetAllProfilesAsync()
     {
-       return await _context.SysProfiles
-                    .Include(v => v.BusinessCompany)
-                    .ToListAsync();
+        return await _context.SysProfiles
+                     .Include(v => v.BusinessCompany)
+                     .ToListAsync();
     }
-   
+
+    public async Task RemoveProfileAsync(int? id)
+    {
+        if (id == null)
+            throw new InvalidOperationException("Erro! Id não fornecido ou não contém um valor valido!");
+
+        var profile = await _context.SysProfiles.FindAsync(id);
+        if (profile == null)
+        {
+            throw new InvalidOperationException("Perfil não encontrado");
+        }
+        else
+        {
+            _context.SysProfiles.Remove(profile);
+        }
+    }
+
 }

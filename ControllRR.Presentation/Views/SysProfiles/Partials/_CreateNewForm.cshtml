@@ -1,0 +1,53 @@
+@model ControllRR.Presentation.ViewModels.SysProfilesViewModel;
+
+<form asp-controller="SysProfiles" asp-action="NewProfile" method="post">
+    <div class="row">
+     <div class="form-group col-md-3">
+    <label asp-for="SysProfilesDto.NomePlano"></label>
+    <input asp-for="SysProfilesDto.NomePlano" class="form-control input-sm" />
+    <span asp-validation-for="SysProfilesDto.NomePlano" class="text-danger"></span>
+    </div>
+   <div class="form-group col-md-2">
+    <label asp-for="SysProfilesDto.ValorPlano"></label>
+    <input asp-for="SysProfilesDto.ValorPlano" class="form-control input-sm" />
+    <span asp-validation-for="SysProfilesDto.ValorPlano" class="text-danger"></span>
+    </div> 
+     <div class="form-group col-md-2">
+    <label asp-for="SysProfilesDto.DescricaoPlano"></label>
+    <input asp-for="SysProfilesDto.DescricaoPlano" class="form-control input-sm" />
+    <span asp-validation-for="SysProfilesDto.DescricaoPlano" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-2">
+    <label asp-for="SysProfilesDto.BasePlanoVelocidade"></label>
+    <input asp-for="SysProfilesDto.BasePlanoVelocidade" class="form-control input-sm" />
+    <span asp-validation-for="SysProfilesDto.BasePlanoVelocidade" class="text-danger"></span>
+    </div> 
+    <div class="col">
+    <label asp-for="SysProfilesDto.FilialPlano"></label>
+    <input asp-for="SysProfilesDto.FilialPlano" class="form-control input-sm" />
+    <span asp-validation-for="SysProfilesDto.FilialPlano" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-2">
+    <label asp-for="SysProfilesDto.TipoConexao"></label>
+    <input asp-for="SysProfilesDto.TipoConexao" class="form-control input-sm" />
+    <span asp-validation-for="SysProfilesDto.TipoConexao" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-2">
+    <label asp-for="SysProfilesDto.Ciclo"></label>
+    <input asp-for="SysProfilesDto.Ciclo" class="form-control input-sm" />
+    <span asp-validation-for="SysProfilesDto.Ciclo" type="date" class="text-danger"></span>
+    </div> 
+    <div class="form-group col-md-3">
+    <label asp-for="SysProfilesDto.BusinessCompanyId"></label>
+    <select asp-for="SysProfilesDto.BusinessCompanyId" 
+            asp-items="@(new SelectList(Model.BusinessCompanyDto, "Id", "NomeFantasia"))" 
+            class="form-control">
+        <option value="">Selecione uma empresa</option>
+    </select>
+    <span asp-validation-for="SysProfilesDto.BusinessCompanyId" class="text-danger"></span>
+</div>
+    
+    <div class="mt-4">
+    <button type="submit" class="btn btn-success" onclick="displayBusyIndicator()">Salvar</button>
+    </div>
+</form>

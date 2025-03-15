@@ -7,5 +7,5 @@ public interface ISysProfilesRepository : IRepository<SysProfiles>
     Task<SysProfiles?> GetProfile(int? id);
     //Task AddProfile(Profiles profile);
     //Task<Profiles> UpdateProfile(Profiles profile);
-    //Task<Profiles> DeleteProfile(int id);
+    Task RemoveProfileAsync(int? id);
 }

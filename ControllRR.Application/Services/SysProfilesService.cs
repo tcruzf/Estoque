@@ -55,11 +55,11 @@ public class SysProfilesService : ISysProfilesService
 
             await _uow.BeginTransactionAsync();
             var profileRepo = _uow.GetRepository<ISysProfilesRepository>();
-            var newProfile = _mapper.Map<SysProfiles>(profiles);         
+            var newProfile = _mapper.Map<SysProfiles>(profiles);
             await profileRepo.AddAsync(newProfile);
             await _uow.SaveChangesAsync();
             await _uow.CommitAsync();
-            return new OperationResultDto 
+            return new OperationResultDto
             {
                 Success = true,
                 Message = "Inserido com Sucesso!"
@@ -93,8 +93,72 @@ public class SysProfilesService : ISysProfilesService
         }});";
     }
 
-    public Task UpdateAsync(SysProfilesDto profiles)
+    private string GenerateSucessScript(string name)
     {
-       throw new NotImplementedException();
+        return $@"
+        Swal.fire({{
+            icon: 'success',
+            title: 'Perfil! adicionado com sucesso!',
+            html: `O perfil foi inserido com sucesso!: <b>{name}</b> ! <br> 
+                   `,
+            footer: '<a href='/Stocks/SearchProduct'>Verifique os perfis</a>'
+        }});";
     }
+
+    public async Task<OperationResultDto> UpdateAsync(SysProfilesDto profiles)
+    {
+        var result = new OperationResultDto { Success = true };
+        try
+        {
+            await _uow.BeginTransactionAsync();
+            var profileRepo = _uow.GetRepository<ISysProfilesRepository>();
+            var existProfile = await profileRepo.GetProfile(profiles.Id);
+
+            var profile = _mapper.Map<SysProfiles>(profiles);
+            await profileRepo.UpdateAsync(profile);
+            await _uow.SaveChangesAsync();
+            await _uow.CommitAsync();
+            return result;
+
+
+        }
+        catch (Exception ex)
+        {
+            result.Success = false;
+            result.AlertScript = GenerateErrorScript(ex.Message);
+            return result;
+        }
+
+
+    }
+
+    public async Task<OperationResultDto> RemoveAsync(int? id)
+    {
+        var result = new OperationResultDto { Success = false };
+        try
+        {
+            await _uow.BeginTransactionAsync();
+            var profileRepo = _uow.GetRepository<ISysProfilesRepository>();
+            var exist = profileRepo.GetProfile(id);
+
+            if (exist == null)
+                throw new InvalidOperationException("Erro ao encontrar manutenção");
+
+            await profileRepo.RemoveProfileAsync(id);
+            result.Success = true;
+            result.AlertScript = GenerateSucessScript("Removido com sucesso!");
+            await _uow.SaveChangesAsync();
+            await _uow.CommitAsync();
+            return result;
+
+        }
+        catch (Exception ex)
+        {
+            result.Success = false;
+            result.AlertScript = GenerateErrorScript(ex.Message);
+            return result;
+        }
+
+    }
+
 }

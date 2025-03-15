@@ -8,6 +8,7 @@ public interface ISysProfilesService
     Task<List<SysProfilesDto>> FindAllAsync();
     Task<SysProfilesDto> FindByIdAsync(int? id);
     Task<OperationResultDto> InsertAsync(SysProfilesDto profiles);
-    Task UpdateAsync(SysProfilesDto profiles);
+    Task<OperationResultDto> UpdateAsync(SysProfilesDto profiles);
+     Task<OperationResultDto> RemoveAsync(int? id);
 
 }
