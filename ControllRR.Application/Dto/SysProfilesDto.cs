@@ -44,5 +44,5 @@ public class SysProfilesDto
     public decimal? PadraoMulta { get; set; }
     [Display(Name = "Empresa")]
     public int BusinessCompanyId { get; set; }
-    public BusinessCompanyDto BusinessCompanyDto { get; set; } = null!;
+    public BusinessCompanyDto BusinessCompanyDto { get; set; } = null!; 
 }
