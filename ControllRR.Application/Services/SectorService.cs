@@ -8,7 +8,7 @@ namespace ControllRR.Application.Services;
 
 public class SectorService : ISectorService
 {
-    private readonly ISectorRepository _sectorRepository;
+    
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _uow;
     public SectorService(
@@ -17,14 +17,17 @@ public class SectorService : ISectorService
         IUnitOfWork uow
         )
     {
-        _sectorRepository = sectorRepository;
+      
         _mapper = mapper;
         _uow = uow;
     }
 
     public async Task<List<SectorDto>> FindAllAsync()
     {
-        var sectors = await _sectorRepository.FindAllAsync();
+        await _uow.BeginTransactionAsync();
+        var sectorRepo = _uow.GetRepository<ISectorRepository>();
+        //
+        var sectors = await sectorRepo.FindAllAsync();
         return _mapper.Map<List<SectorDto>>(sectors);
 
     }
@@ -33,7 +36,8 @@ public class SectorService : ISectorService
     {
         await _uow.BeginTransactionAsync();
         var sector = _mapper.Map<Sector>(sectorDto);
-        await _sectorRepository.InsertAsync(sector);
+        var sectorRepo = _uow.GetRepository<ISectorRepository>();
+        await sectorRepo.InsertAsync(sector);
         await _uow.SaveChangesAsync();
         await _uow.CommitAsync();
 
@@ -42,15 +46,24 @@ public class SectorService : ISectorService
 
     public async Task<SectorDto> FindByIdAsync(int id)
     {
-        var sector = await _sectorRepository.FindByIdAsync(id);
+        await _uow.BeginTransactionAsync();
+        var sectorRepo = _uow.GetRepository<ISectorRepository>();
+        //
+        var sector = await sectorRepo.FindByIdAsync(id);
         return _mapper.Map<SectorDto>(sector);
 
     }
 
     public async Task<object> GetSectorAsync(int start, int length, string searchValue, string sortColumn, string sortDirection)
     {
+        try{
+            await _uow.BeginTransactionAsync();
+            var sectorRepo = _uow.GetRepository<ISectorRepository>();
+
+
+        
         (IEnumerable<object> data, int totalRecords, int filteredRecords) =
-              await _sectorRepository.GetSectorAsync(start, length, searchValue, sortColumn, sortDirection);
+              await sectorRepo.GetSectorAsync(start, length, searchValue, sortColumn, sortDirection);
 
         return new
         {
@@ -59,13 +72,19 @@ public class SectorService : ISectorService
             recordsFiltered = filteredRecords,
             data
         };
+        }
+        catch(Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 
     public async Task UpdateAsync(SectorDto sectorDto)
     {
         await _uow.BeginTransactionAsync();
         var sector = _mapper.Map<Sector>(sectorDto);
-        await _sectorRepository.UpdateAsync(sector);
+        var sectorRepo = _uow.GetRepository<ISectorRepository>();
+        await sectorRepo.UpdateAsync(sector);
         await _uow.SaveChangesAsync();
         await _uow.CommitAsync();
 

@@ -1,0 +1,59 @@
+@model ControllRR.Application.Dto.CustomerDto;
+@{
+   
+    ViewData["Title"]="Consulta de Clientes";
+}
+@if (TempData["SectorSuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SectorSuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["SectorErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["SectorErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4"></h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="/Sectors/GetAll">Clientes</a></li>
+          <li class="breadcrumb-item active">Consulta/Filtro</li>
+    </ol>
+</div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Data:: -- Info. Clientes - Ativos e Inativos ::
+        </div>
+   
+<div class="row">
+<div class="col-md-12">
+
+<div class="container">
+    <div class="table-responsive">
+        <table id="customerTable" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Endereço</th>
+                    <th>CPF/CNPJ</th>
+                    <th>WhattsApp</th>
+                    <th>Telefone</th>
+                    <th>Ações Disponiveis</th>
+                </tr>
+            </thead>
+            <tbody>
+               
+            </tbody>
+             
+        </table>
+    </div>
+</div>
+</div>
+</div>

@@ -46,4 +46,28 @@ public class CusomerService : ICustomerService
             throw;
         }
     }
+
+     public async Task<object> GetCustomerAsync(int start, int length, string searchValue, string sortColumn, string sortDirection)
+    {
+        try{
+            await _uow.BeginTransactionAsync();
+            var customerRepo = _uow.GetRepository<ICustomerRepository>();
+
+
+        
+       var result = await customerRepo.GetPaginatedCustomersAsync(start, length, searchValue, sortColumn, sortDirection);
+
+        return new
+        {
+            draw = Guid.NewGuid().ToString(),
+            recordsTotal = result.TotalRecords,
+            recordsFiltered = result.FilteredRecords,
+            data = result.Data
+        };
+        }
+        catch(Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
 }

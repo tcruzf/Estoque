@@ -112,7 +112,7 @@ public class DevicesController : Controller
 
     [Authorize(Roles = "Manager, Admin")]
     [HttpGet]
-    public async Task<IActionResult> CreateNew()
+    public async Task<IActionResult> CreateNew()//
     {
         var sectors = await _sectorService.FindAllAsync();
         var viewModel = new DeviceViewModel { Sector = sectors };
