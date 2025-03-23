@@ -29,16 +29,36 @@ public class DocumentService : IDocumentService
 
     public async Task<IEnumerable<DocumentDto>> GetAllAsync()
     {
-        var documents = await _documentRepository.GetAllAsync();
-        return _mapper.Map<IEnumerable<DocumentDto>>(documents);
+        try
+        {
+            await _uow.BeginTransactionAsync();
+            var documentRepo = _uow.GetRepository<IDocumentRepository>();
+            var documents = await documentRepo.GetAllAsync();
+            return _mapper.Map<IEnumerable<DocumentDto>>(documents);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
 
     }
 
     public async Task AddAsync(DocumentDto documentDto)
     {
-        var document = _mapper.Map<Document>(documentDto);
-        await _documentRepository.AddAsync(document);
+        try
+        {
+            await _uow.BeginTransactionAsync();
+            var documentRepo = _uow.GetRepository<IDocumentRepository>();
+            var document = _mapper.Map<Document>(documentDto);
+            await documentRepo.AddAsync(document);
+            await _uow.SaveChangesAsync();
+            await _uow.CommitAsync();
 
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 
     public async Task<DocumentDto> UploadDocumentAsync(DocumentDto documentDto)
@@ -51,13 +71,14 @@ public class DocumentService : IDocumentService
         try
         {
             await _uow.BeginTransactionAsync();
+            var documentRepo = _uow.GetRepository<IDocumentRepository>();
             string uniqueFileName = await _fileStorageService.SaveFileAsync(documentDto.FormFile, "uploads");
 
             documentDto.DocumentName = uniqueFileName;
             documentDto.UploadedAt = DateTime.Now;
 
             var document = _mapper.Map<Document>(documentDto);
-            await _documentRepository.AddAsync(document);
+            await documentRepo.AddAsync(document);
             await _uow.SaveChangesAsync();
             await _uow.CommitAsync();
             return documentDto;
@@ -71,9 +92,17 @@ public class DocumentService : IDocumentService
 
     public async Task DeleteAsync(int id)
     {
-        await _uow.BeginTransactionAsync();
-        await _documentRepository.DeleteAsync(id);
-        await _uow.SaveChangesAsync();
-        await _uow.CommitAsync();
+        try
+        {
+            await _uow.BeginTransactionAsync();
+            var documentRepo = _uow.GetRepository<IDocumentRepository>();
+            await documentRepo.DeleteAsync(id);
+            await _uow.SaveChangesAsync();
+            await _uow.CommitAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 }
