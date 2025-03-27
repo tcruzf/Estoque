@@ -22,7 +22,7 @@ public class DeviceService : IDeviceService
     {
         try
         {
-            await _uow.BeginTransactionAsync();
+            //await _uow.BeginTransactionAsync();
             var deviceRepo = _uow.GetRepository<IDeviceRepository>();
             var devices = await deviceRepo.FindAllAsync();
             return _mapper.Map<List<DeviceDto>>(devices);
@@ -37,7 +37,7 @@ public class DeviceService : IDeviceService
     {
         try
         {
-            await _uow.BeginTransactionAsync();
+            //await _uow.BeginTransactionAsync();
             var deviceRepo = _uow.GetRepository<IDeviceRepository>();
             var devices = await deviceRepo.FindByIdAsync(id);
             return _mapper.Map<DeviceDto>(devices);
@@ -90,7 +90,7 @@ public class DeviceService : IDeviceService
     {
         try
         {
-            await _uow.BeginTransactionAsync();
+            //await _uow.BeginTransactionAsync();
             var deviceRepo = _uow.GetRepository<IDeviceRepository>();
 
             (IEnumerable<object> data, int totalRecords, int filteredRecords) =
@@ -114,7 +114,7 @@ public class DeviceService : IDeviceService
     {
         try
         {
-            await _uow.BeginTransactionAsync();
+            //await _uow.BeginTransactionAsync();
             var deviceRepo = _uow.GetRepository<IDeviceRepository>();
             return await deviceRepo.CountDevices();
         }
@@ -128,7 +128,7 @@ public class DeviceService : IDeviceService
     {
         try
         {
-            await _uow.BeginTransactionAsync();
+            //await _uow.BeginTransactionAsync();
             var deviceRepo = _uow.GetRepository<IDeviceRepository>();
             var devices = await deviceRepo.SearchAsync(
                     term,

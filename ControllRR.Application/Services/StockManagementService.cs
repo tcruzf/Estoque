@@ -36,7 +36,10 @@ public class StockManagementService : IStockManagementService
     public async Task AddMovementAsync(int stockId, StockMovementType type, int quantity, DateTime movementDate, int? maintenanceId = null, int? purchaseOrderId =null)
     { 
         //await _uow.BeginTransactionAsync();
-        var stock = await _stockRepository.GetByIdAsync(stockId);
+        var stockRepo = _uow.GetRepository<IStockRepository>();
+        var stockManagementRepo = _uow.GetRepository<IStockManagementRepository>();
+        
+        var stock = await stockRepo.GetByIdAsync(stockId);
         if (stock == null)
             throw new Exception($"Estoque ID {stockId} não encontrado.");
 
@@ -47,7 +50,7 @@ public class StockManagementService : IStockManagementService
             else
                 stock.ProductQuantity -= quantity;
 
-            await _stockRepository.UpdateAsync(stock);
+            await stockRepo.UpdateAsync(stock);
             //await _uow.SaveChangesAsync();
         }
 
@@ -61,7 +64,7 @@ public class StockManagementService : IStockManagementService
             PurchaseOrderId = purchaseOrderId
         };
 
-        await _stockManagementRepository.AddAsync(movement);
+        await stockManagementRepo.AddAsync(movement);
         await _uow.SaveChangesAsync();
         //await _uow.CommitAsync();
        

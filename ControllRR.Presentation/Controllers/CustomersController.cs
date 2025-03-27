@@ -60,11 +60,11 @@ public class CustomersController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> InsertCustomer(CustomerViewModel customerViewModel)
     {
-       /* if(!ModelState.IsValid)
-        {
-            TempData["ClienteErrorMessage"] = $"Erro ao cadastrar o cliente : {customerViewModel.CustomerDto.Name}!";
-            return View("Views/Customers/InsertCustomer.cshtml", customerViewModel);
-        }*/
+        /* if(!ModelState.IsValid)
+         {
+             TempData["ClienteErrorMessage"] = $"Erro ao cadastrar o cliente : {customerViewModel.CustomerDto.Name}!";
+             return View("Views/Customers/InsertCustomer.cshtml", customerViewModel);
+         }*/
         try
         {
             await _customerService.InsertAsync(customerViewModel.CustomerDto);

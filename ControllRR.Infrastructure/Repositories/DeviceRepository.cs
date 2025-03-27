@@ -41,7 +41,7 @@ public class DeviceRepository : BaseRepository<Device>, IDeviceRepository
         return await _context.Devices
         .Include(x => x.Sector)
         .FirstOrDefaultAsync(x => x.Id == id);
-    } 
+    }
 
     // Busca informações sobre um determinado dispositivo com base no seu Id.
     // Inclue na busca todas as manutenções relacionadas a ele e também seu setor
@@ -76,10 +76,7 @@ public class DeviceRepository : BaseRepository<Device>, IDeviceRepository
         // invalida, então realiza a persistencia dos novos dados no banco de dados.
         try
         {
-
             _context.Entry(device).CurrentValues.SetValues(device);
-
-
         }
         catch (DbConcurrencyException e)
         {
@@ -162,13 +159,13 @@ public class DeviceRepository : BaseRepository<Device>, IDeviceRepository
 
     public async Task<List<Device>> Search(string term)
     {
-       return await _context.Devices
-        .Where(d => d.Model.Contains(term) || 
-                    d.SerialNumber.Contains(term) || 
-                    d.Type.Contains(term) || 
-                    d.Identifier.Contains(term))
-        .ToListAsync();//
-        
+        return await _context.Devices
+         .Where(d => d.Model.Contains(term) ||
+                     d.SerialNumber.Contains(term) ||
+                     d.Type.Contains(term) ||
+                     d.Identifier.Contains(term))
+         .ToListAsync();//
+
     }
 
 

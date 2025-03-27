@@ -59,11 +59,12 @@ public class MaintenanceService : IMaintenanceService
             var control = await controlRepo.GetCurrentControlAsync();
             control.CurrentNumber += 1;
             maintenance.MaintenanceNumber = control.CurrentNumber;
-            //System.Console.WriteLine("###################################################################");
-            //System.Console.WriteLine(maintenance.MaintenanceNumber);
-            //System.Console.WriteLine("###################################################################");
+            System.Console.WriteLine("###################################################################");
+            System.Console.WriteLine(maintenance.MaintenanceNumber);
+            System.Console.WriteLine("###################################################################");
             await _uow.SaveChangesAsync();
-
+            System.Console.WriteLine("#####################################################");
+            System.Console.WriteLine("Saved Maintenance");
             var maintenanceRepo = _uow.GetRepository<IMaintenanceRepository>();
             await maintenanceRepo.AddAsync(maintenance);
             await _uow.SaveChangesAsync();
@@ -74,12 +75,13 @@ public class MaintenanceService : IMaintenanceService
 
                 if (stock.ProductQuantity < product.QuantityUsed)
                 {
+                    System.Console.WriteLine("Test if maintenance");
 
                     await _uow.RollbackAsync();
                     result.Success = false;
                     result.AlertScript = GenerateStockErrorScript(stock.ProductName, product.QuantityUsed);
                     //await transaction.RollbackAsync();
-                    return result;
+                    //return result;
 
                     //throw new Exception($"Estoque insuficiente: {stock.ProductName}");
                 }
@@ -102,6 +104,8 @@ public class MaintenanceService : IMaintenanceService
         catch (Exception ex)
         {
             await _uow.RollbackAsync();
+            System.Console.WriteLine("###############################################");
+            //throw new Exception(ex.Message);
             return new OperationResultDto
             {
                 Success = false,

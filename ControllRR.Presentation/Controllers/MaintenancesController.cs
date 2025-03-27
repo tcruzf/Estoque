@@ -153,9 +153,11 @@ public class MaintenancesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> New(MaintenanceDto maintenanceDto)
     {
+        System.Console.WriteLine("Maintenance Controller");
         //await Task.Delay(2000);
         if (!ModelState.IsValid)
         {
+            System.Console.WriteLine("Maintenance ModelState invalid");
             var viewModel = new MaintenanceViewModel
             {
                 ApplicationUserDto = await _userService.FindAllAsync(),
@@ -164,6 +166,7 @@ public class MaintenancesController : Controller
         }
 
         var user = await _userService.FindAllAsync();
+        System.Console.WriteLine("Maintenance Model State valid");
         var applicationUserDto = user.Select(u => new ApplicationUserDto
         {
             Name = u.Name,
@@ -173,12 +176,14 @@ public class MaintenancesController : Controller
         }).ToList();
         try
         {
+            System.Console.WriteLine("Bloco TRY");
             await _maintenanceService.InsertAsync(maintenanceDto);
             TempData["MaintenanceSuccessMessage"] = $"Manutençao cadastrada com sucesso!";
             return RedirectToAction(nameof(MaintenanceList));
         }
         catch (Exception ex)
         {
+            System.Console.WriteLine("Exception!");
             TempData["MaintenanceErrorMessage"] = $"Não foi possivel cadastrar a manutenção! Erro : {ex.Message}!";
             throw new Exception(ex.Message);
         }
